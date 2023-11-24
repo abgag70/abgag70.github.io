@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Slideshow</title>
+    <style>
+        #pdf-container {
+            width: 800px;
+            height: 600px;
+            overflow: hidden;
+            margin: auto;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        .pdf-page {
+            width: 100%;
+            height: 100%;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #f1f1f1;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        #prev-button {
+            left: 10px;
+        }
+
+        #next-button {
+            right: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.1.266/build/pdf.min.js"></script>
+
+</head>
+<body>
+
+    <div id="pdf-container">
+        <!-- Placeholder for PDF pages -->
+    </div>
+
+    <button class="nav-button" id="prev-button">Previous</button>
+    <button class="nav-button" id="next-button">Next</button>
+
+    <script>
+        // Assuming the PDF.js library is included in the project
+        const pdfContainer = document.getElementById('pdf-container');
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+
+        const url = 'https://grap-hdr-project.s3.ca-central-1.amazonaws.com/F%C3%A9minismes%20et%20intersectionnalit%C3%A9s%2020210217.pdf'; // Path to your PDF file
+
+        // Load the PDF
+        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+            pdfDoc = pdfDoc_;
+            renderPage(pageNum);
+        });
+
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(function(page) {
+                let viewport = page.getViewport({scale: 1});
+                let canvas = document.createElement('canvas');
+                let ctx = canvas.getContext('2d');
+                let renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                pdfContainer.innerHTML = '';
+                pdfContainer.appendChild(canvas);
+
+                page.render(renderContext).promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+        }
+
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        function onPrevPage() {
+            if (pageNum <= 1) {
+                return;
+            }
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) {
+                return;
+            }
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+
+        document.getElementById('prev-button').addEventListener('click', onPrevPage);
+        document.getElementById('next-button').addEventListener('click', onNextPage);
+    </script>
+
+</body>
+</html>
