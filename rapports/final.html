@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Projet Vio-SIS</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/static/assets/img/favicon.png" rel="icon">
+  <link href="/static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Overpass:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/static/assets/css/style.css" rel="stylesheet">
+
+  <style>
+    /*Overiding bootstarp*/
+    .carousel-control-prev-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+     }
+     
+     .carousel-control-next-icon {
+       background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+     }
+
+    .list-group-item:hover {
+        color: #e30513; /* Change this to your desired hover color */
+    }
+
+    /* Targeting all anchor tags within the list */
+    .p-4 ol.list-unstyled li a {
+        text-decoration: none; /* Removes the underline by default */
+    }
+    
+    .p-4 ol.list-unstyled li a:hover {
+        text-decoration: underline; /* Adds underline on hover */
+    }
+
+  </style>
+
+  <!-- =======================================================
+  * Template Name: OnePage
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo" style="color:#000000;">Projet VIO-SIS<span style="color:#e30513;"><strong> ULaval</strong></span></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo"><img src="/static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}">Accueil</a></li>
+          <li class="dropdown"><a href="#"><span>Le projet</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#">Formation et début de projet</a></li>
+              <li><a href="#">Contenu du projet</a></li>
+              <li><a href="#">Éthique et Méthodologie</a></li>
+              <li><a href="#">Rapports</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#team">Équipe de recherche</a></li>
+          
+          <!-- Button
+          <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
+          -->
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header>
+  <!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2></h2>
+          <ol>
+            <li><a href="/le-projet#rapports">Rapports</a></li>
+            <li>Rapport intérimaire 3</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg pb-2 mb-0">
+      <div class="container" data-aos="">
+
+        <div class="row g-5">
+            <div class="col-md-8">
+              <h4 class="pb-4 mb-4 border-bottom">
+                Rapport final
+              </h4>
+              
+            <!--
+              <article class="blog-post">
+                <p>
+                  RAPPORT INTÉRIMAIRE 3 DU PROJET DE RECHERCHE :
+                </p>
+
+                <p>
+                  <strong>
+                    Obstacles et leviers pour l’accès à la justice et à des milieux organisationnels et professionnels équitables et égalitaires : Identifier, caractériser et comprendre les violences structurelles, institutionnelles et symboliques vécues par les femmxs pour les transformer.
+                  </strong>
+                </p>
+
+                 <p>
+                  PRÉPARÉ PAR JOE DUCHARME, coordonnatrice
+                 </p>
+                 <p>
+                  SOUS LA DIRECTION de la PROFESSEURE MARIE-CLAIRE BELLEAU, responsable scientifique ainsi que de la PROFESSEURE ISABELLE AUCLAIR, coresponsable scientifique du projet de recherche
+                 </p>
+                 <p>
+                  NUMÉRO DU CONTRAT : 1W001-180192/011/SL – MINISTÈRE DES FEMMES ET DE L’ÉGALITÉ DES GENRES CANADA
+                 </p>
+                 <p>
+                  Université Laval, 31 août 2022
+                 </p>
+                
+
+                <a id="">
+                </a>
+                <a id="_Toc114468309">
+                </a>
+                <br>
+                <h5><strong>RÉSUMÉ EXÉCUTIF</strong></h5>
+                <hr>
+
+                 <p>
+                  Ce rapport intérimaire 3 fait état de l’avancement des travaux prévus à la section 6 du contrat 1W001-180192/011/SL (p.11 sur 20) conclut entre Condition féminine Canada, renommée le ministère des Femmes et de l’Égalité des genres Canada, et l’Université Laval. Ce rapport décrit et contient en annexes les différents outils développés et les documents utilisés pour la réalisation du projet de recherche.
+                 </p>
+                 <p>
+                  En date du 31 août 2022, l’équipe de recherche poursuit leurs tâches associées à la phase 6.2 – Étape 1 du projet soit la recherche initiale et la collecte des données.
+                 </p>
+
+                <a id="">
+                </a>
+                <a id="_Toc114468310">
+                </a>
+                <br>
+                <h5><strong>INTRODUCTION</strong></h5>
+                <hr>
+
+
+                 <p>
+                  L’amélioration de l’accès à la justice ainsi que la prise en compte des inégalités systémiques, notamment genrées, dans les pratiques et les cultures organisationnelles dans l’ensemble des secteurs de la société sont des préoccupations pressantes. De nombreuses études et interventions ont tenté d’identifier, de comprendre et de transformer les difficultés et les obstacles auxquels les femmxs
+                  <sup>
+                   <a href="#footnote-1" id="footnote-ref-1">
+                    [1]
+                   </a>
+                  </sup>
+                  sont confrontées.
+                 </p>
+                 <p>
+                  Il n’en demeure pas moins que la majorité de ces recherches qui traite d’accès à la justice, au milieux organisationnels et professionnels soit centrée sur une analyse micro, donc davantage sur les variables individuelles, plutôt qu’une méso ou macro qui tient compte notamment du genre, de l’ethnie, de la classe sociale, de l’âge, de l’orientation sexuelle et de l’identité de genre, qui représentent des facteurs de vulnérabilité considérables. De plus, peu de recherches s’attardent sur les dimensions structurelles, organisationnelles (formelles, informelles et implicites), institutionnelles et symboliques qui entretiennent ou renforcent les rapports sociaux inégalitaires. En somme, les travaux entourant les violences structurelles, institutionnelles et symboliques (Vio-SIS) vécues par les femmes ne sont pas légion et ne font pas l’objet de synthèses de connaissances spécifiques. Puisque ces types de violences sont souvent sournoises, elles jouent un rôle important dans la reproduction des inégalités systémiques.
+                 </p>
+                 <p>
+                  Ce projet de recherche s’appuie ainsi sur l’expertise d’un collectif de personnes chercheures féministes issues de 4 domaines du savoir (administration, droit, éducation et criminologie) qui souhaitent travailler dans une perspective interdisciplinaire pour synthétiser et analyser de façon transversale la littérature. Elles proposent d’effectuer l’examen de la littérature qui porte sur les difficultés et les obstacles qui nuisent aux femmxs ainsi que sur les opportunités et les leviers qui s’offrent à elles dans deux axes précis, soit l’accès à la justice (axe 1) et l’accès à des milieux organisationnels et professionnels équitables et égalitaires (axe 2). Le choix du néologisme « femmxs » dans notre projet de recherche découle d’une décision commune prise par l’équipe afin d’être le plus inclusif possible.
+                 </p>
+                 <p>
+                  Plus spécifiquement, les chercheures féministes procéderont à l’analyse de la littérature de certaines dimensions (7 thèmes) réparties autour de ces deux axes dans le but d’identifier, de caractériser et de mieux comprendre les Vio-SIS vécues par les femmxs. Les quatre sujets de recherche de l’axe de l’accès à la justice sont : 1) femmxs et incarcération; 2) accès à la justice réparatrice pour les femmxs victimes d’actes criminels; 3) résolutions des conflits en contexte de violence conjugale et familiale; 4) accès aux droits économiques, sociaux et culturels pour les femmxs marginalisées en situation de pauvreté. Quant aux trois thèmes de recherche sur l’accès aux organisations, il s’agit des : 1) organisations canadiennes et développement international et action humanitaire; 2) organisations sportives, et 3) professions traditionnellement masculines.
+                 </p>
+                 <p>
+                  Il convient de nommer, de comprendre et de documenter les Vio-SIS dans une perspective interdisciplinaire, car cela contribue au développement des connaissances et la mise en place de stratégies efficaces pour les contrer et pour transformer les pratiques culturelles, sociales, politiques et économiques qui les engendrent.
+                 </p>
+                 <p>
+                  Ce rapport intérimaire décrit l’avancement des travaux (Partie 1) ainsi que les outils de travail développés dans le cadre de ce projet de recherche (Partie 2). Il contient les éléments suivants :
+                 </p>
+                 <p>
+                  <strong>
+                   Partie 1 : Avancement des travaux
+                  </strong>
+                 </p>
+                 <p>
+                  Une brève description des changements au sein du projet durant les 16 premiers mois de ce projet de recherche :
+                 </p>
+                 <p>
+                  Printemps 2022
+                 </p>
+                 <ul>
+                  <li>
+                   Déroulement d’une rencontre pour expliquer l’exercice préparatoire au 2
+                   <sup>
+                    e
+                   </sup>
+                   tri entre les personnes auxiliaires et professionnelles de recherche et bibliothécaire, Élyse Granger;
+                  </li>
+                  <li>
+                   Distribution d’un exercice préparatoire au 2
+                   <sup>
+                    e
+                   </sup>
+                   tri destiné aux auxiliaires de recherche;
+                  </li>
+                  <li>
+                   Déroulement d’une rencontre avec les personnes auxiliaires de recherche et professionnelles de recherches et bibliothécaire visant à revenir sur les différentes réponses obtenues lors de l’exercice préparatoire, trouver des astuces et répondre aux questions;
+                  </li>
+                  <li>
+                   Déroulement de six rencontres offertes par Joe Ducharme et Élyse Granger visant à soutenir les personnes auxiliaires de recherche et professionnelle de recherche au début du 2
+                   <sup>
+                    e
+                   </sup>
+                   tri (participation de la totalité des auxiliaires lors d’au moins l’une des six rencontres);
+                  </li>
+                  <li>
+                   Déroulement d’une dizaine de rencontres visant à développer la grille d’extraction de données;
+                  </li>
+                  <li>
+                   Embauche de deux auxiliaires (ayant déjà eu des contrats pour ce projet) à 35 heures/semaine du mois de mai au mois d’août 2022;
+                  </li>
+                  <li>
+                   Début de la gestion des conflits issus du 2
+                   <sup>
+                    e
+                   </sup>
+                   tri;
+                  </li>
+                  <li>
+                   Déroulement de deux rencontres visant à effectuer l’analyse des données issues de la matinée de partage d’expertise avec les groupes de femmes de l’automne 2021 avec Gabrielle Comtois et Joe Ducharme;
+                  </li>
+                  <li>
+                   Embauche de trois nouvelles personnes auxiliaires de recherche;
+                  </li>
+                  <li>
+                   Déroulement de rencontres d’accueil et de soutien au travail des nouvelles personnes auxiliaires de recherche;
+                  </li>
+                  <li>
+                   Déroulement d’une rencontre visant à clarifier trois thématiques du projet de recherche;
+                  </li>
+                  <li>
+                   Resserrement des critères d’inclusion de ces trois thématiques.
+                  </li>
+                 </ul>
+                 <p>
+                  Été 2022
+                 </p>
+                 <ul>
+                  <li>
+                   Début de la collaboration entre Isabelle Auclair, Marie-Claire Belleau et Joe Ducharme afin de coordonner le projet de recherche;
+                   <ul>
+                    <li>
+                     Instauration de rencontres hebdomadaires entre Isabelle Auclair, Marie-Claire et Joe Ducharme pour assurer les suivis du projet de recherche;
+                    </li>
+                   </ul>
+                  </li>
+                  <li>
+                   Distribution d’un premier (juillet 2022), puis d’un deuxième exercice préparatoire (août 2022) à l’extraction des données destiné aux auxiliaires de recherche;
+                  </li>
+                  <li>
+                   Déroulement de rencontres pour expliquer les exercices préparatoires à l’extraction des données entre les personnes auxiliaires, Élyse Granger et Joe Ducharme;
+                  </li>
+                  <li>
+                   Déroulement de rencontres avec les personnes auxiliaires de recherche, Élyse Granger et Joe Ducharme visant à revenir sur les différentes réponses obtenues lors des exercices préparatoires;
+                  </li>
+                  <li>
+                   Élaboration d’un diagramme de Gantt pour planifier la fin du projet (besoins en matière de ressources humaines et de finances afin de mener le projet de recherche à terme);
+                  </li>
+                  <li>
+                   Gestion des conflits issus du 2
+                   <sup>
+                    e
+                   </sup>
+                   tri;
+                  </li>
+                  <li>
+                   Instauration de rencontres hebdomadaire (présence facultative) où les auxiliaires de recherche peuvent poser des questions à Joe Ducharme et aussi travailler, de manière virtuelle, en groupe pour favoriser l’entraide et la motivation;
+                  </li>
+                  <li>
+                   Organisation de la deuxième matinée de partage d’expertises et de connaissances sur les violences symboliques, structurelles et institutionnelles avec les groupes de femmes.
+                  </li>
+                 </ul>
+                 <p>
+                  <strong>
+                   Partie 2 : Outils développés au cours du printemps et de l’été 2022 aux fins du projet de recherche :
+                  </strong>
+                 </p>
+                 <ul>
+                  <li>
+                   Corrigé de l’exercice préparatoire au 2e tri (annexe A);
+                  </li>
+                  <li>
+                   Amorce de l’analyse des données de la matinée de partage d’expertises et de connaissances sur les violences symboliques, structurelles et institutionnelles (annexe B);
+                  </li>
+                  <li>
+                   Outil questions/réponses pour effectuer le 2
+                   <sup>
+                    e
+                   </sup>
+                   tri
+                   <sup>
+                    <a href="#footnote-2" id="footnote-ref-2">
+                     [2]
+                    </a>
+                   </sup>
+                   (annexe C);
+                  </li>
+                  <li>
+                   Corrigé du premier exercice préparatoire à l’extraction des données – (annexe D);
+                  </li>
+                  <li>
+                   Corrigé du deuxième exercice préparatoire à l’extraction des données (annexe E);
+                  </li>
+                  <li>
+                   Outil accompagnant la grille d’extraction des données (annexe F);
+                  </li>
+                  <li>
+                   Diagramme de Gantt (annexe G);
+                  </li>
+                  <li>
+                   Grille d’extraction des données sur Covidence (annexe H).
+                  </li>
+                 </ul>
+
+                <a id="">
+                </a>
+                <a id="_Toc114468311">
+                </a>
+                <br>
+                <h5><strong>1. EXPOSÉ DE L’AVANCEMENT DES TRAVAUX</strong></h5>
+                <hr>
+
+                 <p>
+                  Cette partie présente un portrait des différentes étapes de ce projet de recherche qui ont été réalisées entre le mois d’avril et d’août 2022. Le printemps et l’été 2022 ont apporté leur lot de défis en termes de charge de travail, y compris des enjeux humains complexes et diversifiés ainsi qu’une quantité phénoménale de documents à lire et à traiter entraînant des délais beaucoup plus longs que prévu. Les détails associés à ces défis sont présentés subséquemment.
+                 </p>
+                 <h5>
+                  <a id="_Toc114468312">
+                  </a>
+                  <strong>1.1 Printemps 2022</strong>
+                 </h5>
+                 <p>
+                  <strong>
+                   En avril 2022,
+                  </strong>
+                  Élyse Granger et Joe Ducharme ont convié les auxiliaires de recherche à une rencontre afin de leur expliquer l’exercice préparatoire au 2e tri. Un délai leur a été accordé afin d’effectuer cette tâche. Par la suite, l’analyse des documents par Élyse Granger et Joe Ducharme ainsi que la compilation des réponses des auxiliaires ont contribué à la rédaction d’un corrigé de cet exercice qui a été transmis aux auxiliaires (annexe A). Une rencontre, post exercice, a été organisée afin d’effectuer un retour sur les différentes réponses obtenues, s’entraider à trouver des astuces et répondre aux questions. À cet égard, dans le but d’offrir un soutien adéquat lors du commencement du 2
+                  <sup>
+                   e
+                  </sup>
+                  tri, Élyse Granger et Joe Ducharme ont organisé des rencontres en ligne, deux fois par semaine, pour les auxiliaires qui souhaitaient poser des questions. Après trois semaines, les personnes auxiliaires ont jugé que cette initiative était désormais superflue puisqu’elles n’avaient plus de questions aussi fréquemment. À ce sujet, ces six rencontres ont permis de rejoindre la totalité (sept) des auxiliaires de recherche en poste.
+                 </p>
+                 <p>
+                  Parallèlement au 2
+                  <sup>
+                   e
+                  </sup>
+                  tri, une dizaine de rencontres ont été nécessaires au développement de la grille d’extraction des données. D’abord, une ébauche a été rédigée par Élyse Granger et Joe Ducharme. Par la suite, Gabrielle Comtois, auxiliaire de recherche, a aidé à peaufiner ladite ébauche. Elle a d’ailleurs été présentée aux cochercheures Marie-Claire Belleau et Isabelle Auclair, qui ont, à leur tour, proposé des modifications. La grille a fait l’objet d’une rencontre avec les sept cochercheures du projet de recherche et elle a été brièvement retravaillée à l’instar de quelques commentaires constructifs. Finalement, Gabrielle Comtois et Joe Ducharme ont aussi amélioré la catégorie liée à la diversité couverte dans la grille d’extraction.
+                 </p>
+                 <p>
+                  <strong>
+                   En mai 2022,
+                  </strong>
+                  il a été décidé que deux auxiliaires, qui travaillaient déjà pour ce projet de recherche, soient embauchées à raison de 35 heures par semaine afin d’évaluer un plus grand nombre de documents pour le 2
+                  <sup>
+                   e
+                  </sup>
+                  tri, puis aider pour des tâches telles que la résolution des conflits n
+                  <sup>
+                   o
+                  </sup>
+                  1, le peaufinage de la grille d’extraction des données et le début de l’analyse des données de la matinée de partage d’expertises et de connaissances sur les violences symboliques, structurelles et institutionnelles avec les groupes de femmes de l’automne 2021 (annexe B). Il y a aussi eu l’embauche de trois nouvelles personnes auxiliaires de recherche, Janie Perron, Audrey Thériault, Marie-Lune Thouin (voir le tableau 1.1), ce qui constituait l’une des stratégies pour accélérer le 2
+                  <sup>
+                   e
+                  </sup>
+                  tri. Ces nouvelles auxiliaires ont été accueillies et formées, puis des rencontres ont été organisées afin de les soutenir dans leur tâche.
+                 </p>
+                 <h5>
+                  <a id="_Toc114468313">
+                  </a>
+                  Tableau 1.1 Contribution des personnes auxiliaires et professionnelles de recherche à l’avancement du projet
+                 </h5>
+                 <table class="table table-bordered align-items-top">
+                  <tr>
+                   <td>
+                    <p>
+                     <strong>
+                      Prénom et nom
+                      <br/>
+                     </strong>
+                     <em>
+                      en ordre alphabétique
+                     </em>
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     <strong>
+                      Mois et année de contribution au projet
+                     </strong>
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     <strong>
+                      Statut du contrat
+                     </strong>
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Amélie Guilbault
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Janvier à avril 2021
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Terminé
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Aurèle Fanny Deutcha Nguelieu
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Février à août 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Terminé
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Élizabeth Collin-Paré
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Novembre à décembre 2021 et janvier à août 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Terminé
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Emmy Lapointe
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Février à août 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Terminé
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Gabrielle Comtois
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Janvier à avril 2021, octobre à décembre 2021 et février à novembre 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     En cours
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Joe Ducharme
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Novembre à décembre 2021 et janvier à octobre 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     En cours
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Laura Wilmot
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Février à octobre 2021
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Terminé
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Laurence Ouellet-Boivin
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Février à mai 2021 et mai à juillet 2021
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Terminé
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Mélina Beaulieu
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Mai à août 2021 et janvier à octobre 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     En cours
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td rowspan="2">
+                    <p>
+                     Janyck Beaulieu
+                    </p>
+                    <p>
+                     <em>
+                      * cette personne est devenue professionnelle de recherche
+                     </em>
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Février à mai 2021, mai à juillet 2021 et novembre 2021 à janvier 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Terminé
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Janvier à avril 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Terminé
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Paola Carollo
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Février à novembre 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     En cours
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Janie Perron
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Mai 2022 au 21 août 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Terminé
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Audrey Thériault
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Mai 2022 à décembre 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     En cours
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Marie-Lune Thouin
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     Mai 2022 à décembre 2022
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     En cours
+                    </p>
+                   </td>
+                  </tr>
+                 </table>
+
+                 <p>
+                  <strong>
+                   En juin 2022,
+                  </strong>
+                  il a été constaté que l’exercice de 2
+                  <sup>
+                   e
+                  </sup>
+                  tri avait montré la nécessité de clarifier les critères d’inclusion et d’exclusion dans trois thématiques soit : 1) résolutions des conflits en contexte de violence conjugale et familiale; 2) accès aux droits économiques, sociaux et culturels pour les femmxs marginalisées en situation de pauvreté et 3) professions traditionnellement masculines. Des rencontres avec l’équipe de coordination et les chercheures responsables de chacun de ces thèmes ont donc été tenues. À la suite de ces réunions, il y a eu un resserrement des critères d’inclusion de ces deux thématiques ainsi que l’adaptation de l’outil questions/réponses (annexe C). Les personnes auxiliaires de recherche ont été informées de ces modifications afin de poursuivre adéquatement le 2
+                  <sup>
+                   e
+                  </sup>
+                  tri.
+                 </p>
+
+                 <h5>
+                  <a id="_Toc114468314">
+                  </a>
+                  <strong>1.2 Été 2022</strong>
+                 </h5>
+
+                 <p>
+                  <strong>
+                   Juillet 2022
+                  </strong>
+                  a marqué le début de la collaboration plus assidue entre Isabelle Auclair, Marie-Claire Belleau et Joe Ducharme afin de coordonner le projet de recherche. Des rencontres hebdomadaires entre elles ont été instaurées afin d’assurer le suivi du projet. Ce mois a aussi été celui du début de la période de vacances des chercheures, de la bibliothécaire et de la professionnelle de recherche, donc un nombre réduit de rencontres ont été organisées. Les bilans et les objectifs quant à la fin du 2
+                  <sup>
+                   e
+                  </sup>
+                  tri ont aussi été ébauchés. En effet, en date du 5 juillet 2022, il restait un peu plus de 50% du 2
+                  <sup>
+                   e
+                  </sup>
+                  tri à effectuer. D’ailleurs, devant l’imprévisible et l’énorme quantité de documents en situation de conflits, l’aide de deux auxiliaires de recherche a été demandée pour traiter les conflits n
+                  <sup>
+                   o
+                  </sup>
+                  1 et la professionnelle de recherche s’est vue attitrer les conflits n
+                  <sup>
+                   o
+                  </sup>
+                  2.
+                  <sup>
+                   <a href="#footnote-3" id="footnote-ref-3">
+                    [3]
+                   </a>
+                  </sup>
+                 </p>
+                 <p>
+                  De plus, ne voulant pas accumuler du retard en vue de la prochaine étape de ce projet en même temps que  permettre de tester les limites de la grille d’extraction, un exercice préparatoire à l’extraction des données a été distribué à cinq auxiliaires le 26 juillet 2022. Une rencontre a alors été organisée afin d’expliquer aux auxiliaires de recherche en quoi consiste l’extraction des données, puis qu’elles étaient les consignes associées à cette étape du projet.
+                 </p>
+                 <p>
+                  <strong>
+                   En août 2022,
+                  </strong>
+                  une fois l’exercice préparatoire complété, à la lumière des réponses et des commentaires émis par les auxiliaires de recherche, la grille a été revue et améliorée, notamment par les cochercheures, et cela nous a permis de clarifier nos attentes quant aux réponses extraites. Un corrigé commenté présentant les réponses attendues a été rédigé et fourni aux auxiliaires de recherche (annexe D). De plus, rencontrant plusieurs difficultés d’extraction des données, l’outil qui l’accompagne a été peaufiné en fonction des principaux questionnements et écueils rencontrés lors de cet exercice. Une rencontre post exercice préparatoire a permis de revenir sur les différentes réponses obtenues et de répondre aux questions.
+                 </p>
+                 <p>
+                  Toutefois, il a été jugé préférable de procéder à un deuxième exercice du même genre pour que les personnes auxiliaires de recherche puissent bénéficier d’un essai supplémentaire, cette fois-ci, en ayant une meilleure idée des attentes quant à cette extraction. Encore une fois, une rencontre a été organisée avec les auxiliaires de recherche pour clarifier les attentes et présenter les principales lacunes du précédent exercice préparatoire afin de les éviter à l’avenir. Un corrigé a aussi été rédigé (annexe E), puis l’outil a aussi été amélioré en fonction des commentaires et du peu de difficultés éprouvées (annexe F). À la demande des auxiliaires, quelques initiatives ont été instaurées afin de favoriser l’esprit de groupe, puis de s’entraider et de poser des questions au besoin. Le vendredi matin, de 9h00 à 12h00, est donc une plage horaire réservée, à la présence facultative, pour travailler ensemble, via un lien Zoom, entre auxiliaires et la professionnelle de recherche.
+                 </p>
+                 <p>
+                  En somme, la grille d’extraction a été peaufinée et améliorée tout au long des exercices préparatoires effectués par les auxiliaires de recherche. En effet, il a été jugé important que la grille soit non seulement rigoureuse et cohérente pour le projet, tout en étant suffisamment compréhensible pour les auxiliaires de recherche. Étant un processus itératif, la grille a certainement bénéficié de deux sérieux bancs d’essai pour s’adapter aux besoins du projet de recherche, garantir la fiabilité des données et faciliter son usage pour les auxiliaires.
+                 </p>
+                 <p>
+                  À cette étape du projet et face au constat de l’ampleur du travail du 2
+                  <sup>
+                   e
+                  </sup>
+                  tri en raison de la quantité importante et imprévisible de documents à traiter, l’équipe de coordination a dû procéder à une mise à jour et à une remise en question de la planification du projet. À cet effet, un diagramme de Gantt (annexe G) ajusté aux avancées réelles et aux livrables à venir a été élaboré. De cet exercice, deux constats frappent l’équipe de coordination :
+                 </p>
+                 <p>
+                  1) le manque de temps pour effectuer toutes les tâches, dont la gestion de tous les conflits issus du 2
+                  <sup>
+                   e
+                  </sup>
+                  tri, l’extraction des données, l’analyse des données puis la rédaction des rapports (ébauche et version finale);
+                 </p>
+                 <p>
+                  2) le manque de financement et de ressources humaines nécessaires pour mener à terme toutes les tâches précédemment évoquées.
+                 </p>
+                 <p>
+                  Puisque le nombre de conflits ne cessait d’augmenter, il a été nécessaire d’attitrer cette tâche de gestion de conflits (n
+                  <sup>
+                   o
+                  </sup>
+                  1 et n
+                  <sup>
+                   o
+                  </sup>
+                  2) à quelques auxiliaires de recherche, et ce, en suivant des consignes strictes. En effet, afin de gérer les nombreux conflits inter-juges, quelques auxiliaires ont eu les accès à la résolution de conflits à condition qu’elles n’aient pas été l’une des deux personnes ayant préalablement évalué le document. À près de 1600 conflits à la mi-août 2022, l’aide de ces auxiliaires de recherche était primordiale afin d’assurer la bonne poursuite de ce projet. Voici un portrait statistique de l’état du 2
+                  <sup>
+                   e
+                  </sup>
+                  tri en date du 30 août 2022.
+                 </p>
+
+                 <h5>
+                  <a id="_Toc114468315">
+                  </a>
+                  Tableau 1.2 Statistiques du 2e tri en date du 30 août 2022
+                 </h5>
+
+                 <table class="table table-bordered align-items-top">
+                  <tr>
+                   <td>
+                    <p>
+                     Nombre de documents du 2
+                     <sup>
+                      e
+                     </sup>
+                     tri
+                     <em>
+                      (approximatif
+                      <sup>
+                       <a href="#footnote-4" id="footnote-ref-4">
+                        [4]
+                       </a>
+                      </sup>
+                      )
+                     </em>
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     6703
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Nombre de conflits à traiter
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     1339
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Nombre de documents évalués
+                     <strong>
+                      2x
+                     </strong>
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     5362
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Nombre de documents évalués
+                     <strong>
+                      1x
+                     </strong>
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     18
+                    </p>
+                   </td>
+                  </tr>
+                  <tr>
+                   <td>
+                    <p>
+                     Nombre de documents n’ayant
+                     <strong>
+                      aucun vote
+                     </strong>
+                    </p>
+                   </td>
+                   <td>
+                    <p>
+                     99
+                    </p>
+                   </td>
+                  </tr>
+                 </table>
+                 <p>
+                  En terminant, ces statistiques sont une gracieuseté du travail dévoué de 10 auxiliaires de recherche, une personne bibliothécaire et une professionnelle de recherche responsable du projet. D’une part, pour ce qui est des auxiliaires déjà en poste, les prochaines étapes consistent à résoudre les conflits du 2
+                  <sup>
+                   e
+                  </sup>
+                  tri et à entamer l’extraction des données. À noter que chacune des personnes auxiliaires a pu s’exercer à extraire les données d’un document sur Covidence afin de tester cette manœuvre sur la plateforme (annexe H). D’autre part, il devient urgent d’embaucher d’autres personnes auxiliaires de recherche pour qu’elles puissent bénéficier d’une formation, puis entamer l’extraction des données. Ces embauches permettraient de terminer l’extraction des données avant les congés des Fêtes (fin décembre 2022). L’organisation de la deuxième matinée de partages d’expertises et de connaissances sur les violences symboliques, structurelles et institutionnelles avec les groupes de femmes est en cours et il est prévu que les invitations soient envoyées au début du mois de septembre 2022.
+                 </p>
+
+                <a id="">
+                </a>
+                <a id="_Toc114468316">
+                </a>
+                <br>
+                <h5><strong>CONCLUSION</strong></h5>
+                <hr>
+
+                 <p>
+                  La réalisation de ce projet de recherche exige un travail colossal imprévisible.
+                 </p>
+                 <p>
+                  Il s’avère heureux et encourageant de constater qu’une littérature imposante traite d’enjeux liés aux violences structurelles, institutionnelles et symboliques vécues par les femmxs au Canada.
+                 </p>
+                 <p>
+                  Toutefois, la quantité de documents a posé des défis pratiquement insurmontables à l’équipe de recherche.  Aussi, si l’application de la méthodologie de l’examen de la portée en sciences humaines et sociales se révèle novatrice et porteuse, elle amène également son lot d’enjeux et de complexité notamment à cause de la nature quelque peu subjective des données à traiter.
+                 </p>
+                 <p>
+                  L’équipe de recherche, dont principalement la professionnelle de recherche et la bibliothécaire assignée au projet, a déployé des efforts acharnés afin d’assurer la rigueur des tris puis de l’extraction des données afin de garantir, le mieux possible, la fiabilité des résultats produits par les nombreuses personnes auxiliaires de recherche.
+                 </p>
+                 <p>
+                  Devant les quantités gigantesques de documents à traiter, le projet de recherche a accusé des retards bien involontaires, mais compréhensibles dans les circonstances. Ces mêmes grands défis ont occasionné le recours à des ressources humaines beaucoup plus importantes, mais imprévisibles non seulement au moment de l’élaboration du projet de recherche, mais aussi au cours de sa réalisation.
+                 </p>
+                 <p>
+                  En conséquence, nous avons dû nous tourner de nouveau vers le ministère des Femmes et de l’Égalité des genres Canada afin de demander des délais ainsi que du financement supplémentaire pour mener à bien et compléter ce projet de recherche.
+                 </p>
+                
+                <a id="">
+                </a>
+                <a id="ANNEXES">
+                </a>
+                <br>
+                <h5><strong>ANNEXES</strong></h5>
+                <hr>
+
+                <br>
+                <hr>
+
+                 <ol>
+                  <li id="footnote-1">
+                   <p>
+                    Néologisme émergeant notamment du féminisme intersectionnel retenu par ce projet de recherche.
+                    <a href="#footnote-ref-1">
+                     ↑
+                    </a>
+                   </p>
+                  </li>
+                  <li id="footnote-2">
+                   <p>
+                    Huit versions de cet outil ont été produites. Vous retrouverez uniquement la plus récente en annexe.
+                    <a href="#footnote-ref-2">
+                     ↑
+                    </a>
+                   </p>
+                  </li>
+                  <li id="footnote-3">
+                   <p>
+                    Il y a deux types de conflits :
+                    <strong>
+                     n
+                     <sup>
+                      o
+                     </sup>
+                     1
+                    </strong>
+                    - deux auxiliaires excluent le document, mais ne choisissent pas le même critère d’exclusion ;
+                    <strong>
+                     n
+                     <sup>
+                      o
+                     </sup>
+                     2
+                    </strong>
+                    - une personne auxiliaire inclut le document, alors qu’une autre l’exclut.
+                    <a href="#footnote-ref-3">
+                     ↑
+                    </a>
+                   </p>
+                  </li>
+                  <li id="footnote-4">
+                   <p>
+                    Le nombre demeure approximatif puisque les derniers prêts entre bibliothèques sont arrivés le 30 août 2022. Ils sont peu nombreux, mais ils doivent tout de même être évalués.
+                    <a href="#footnote-ref-4">
+                     ↑
+                    </a>
+                   </p>
+                  </li>
+                 </ol>
+                 
+              </article>
+            -->
+
+            <p>À venir...</p>
+
+        
+        
+            </div>
+        
+            <div class="col-md-4">
+              <div class="position-sticky pt-5" style="top: 2rem;">
+                <div class="p-4 mb-3 bg-light rounded">
+
+              <!--
+                <div class="p-4">
+                  <h4 class="fst-italic">Table des matières</h4>
+                  <ol class="list-unstyled mb-0">
+                      <li><a href="#_Toc114468309">• Résumé exécutif</a></li>
+                      <li><a href="#_Toc114468310">• Introduction</a></li>
+                      <li><a href="#_Toc114468311">• 1. Exposé de l’avancement des travaux</a></li>
+                      <li><a href="#_Toc114468312">&nbsp;&nbsp;&nbsp;&nbsp;• 1.1 Printemps 2022</a></li>
+                      <li><a href="#_Toc114468314">&nbsp;&nbsp;&nbsp;&nbsp;• 1.2 Été 2022</a></li>
+                      <li><a href="#_Toc114468316">• Conclusion</a></li>
+                      <li><a href="#ANNEXES">• Annexes</a></li>
+                  </ol>
+                </div>
+              -->
+
+              <!--
+                <div class="p-4">
+                  <h4 class="fst-italic">Elsewhere</h4>
+                  <ol class="list-unstyled">
+                    <li><a href="#">GitHub</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                  </ol>
+                </div>
+              -->
+
+
+              </div>
+            </div>
+          </div>
+
+  
+      </div>
+    </section><!-- End Sevices Section -->
+
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <br>
+    <br>
+
+    <div class="container py-4 text-center">
+
+      <div class="row justify-content-center">
+        <div class="col-6 col-md-2 copyright text-center pt-3 pb-5">
+          <img class="img-fluid" src="/static/images/ulaval_logo.png">
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col copyright text-center">
+          &copy; Tout droits réservés <strong><span>- Pre Marie-Claire Belleau</span></strong> - Faculté de droit - Université Laval
+        </div>
+        {% comment %}
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+        {% endcomment %}
+      </div>
+    </div>
+
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  
+  <script src="/static/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/static/assets/vendor/aos/aos.js"></script>
+  <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/static/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/static/assets/js/main.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
