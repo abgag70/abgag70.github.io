@@ -202,8 +202,7 @@
         </div>
         <div class="row" id="equipe_div">
 
-          <!-- Les membres de l'équipe sont insérés automatiquement à partir des constantes d'affichage sous la forme suivante : -->
-          
+          <!-- Les membres de l'équipe sont insérés automatiquement à partir des constantes d'affichage sous la forme suivante : -->          
           <!--
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >
             <div class="member">
@@ -395,8 +394,8 @@
             <div class="member-img">
               <img src="${member.imgSrc}" class="img-fluid" alt="">
               <div class="social">
-                ${member.profileUrl ? `<a href="${member.profileUrl}"><i class="bi bi-person-workspace"></i></a>` : ''}
-                ${member.linkedinUrl ? `<a href="${member.linkedinUrl}"><i class="bi bi-linkedin"></i></a>` : ''}
+                ${member.profileUrl ? `<a href="${member.profileUrl}" target="_blank"><i class="bi bi-person-workspace"></i></a>` : ''}
+                ${member.linkedinUrl ? `<a href="${member.linkedinUrl}" target="_blank"><i class="bi bi-linkedin"></i></a>` : ''}
               </div>
             </div>
             <div class="member-info">
