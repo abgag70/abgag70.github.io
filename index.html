@@ -2,35 +2,6 @@
 <html lang="en">
 
 <head>
-  <script async=false>
-  
-    document.addEventListener("DOMContentLoaded", function() {
-        // Define the base URL of your static server
-        const staticServerBaseUrl = "https://di2yrj6u5iwlygd7qvzdqd5yzy0ahhum.lambda-url.ca-central-1.on.aws/";
-    
-        // Function to update the URL in the attribute value
-        function updateUrl(attributeValue) {
-            if(attributeValue && attributeValue.startsWith("static/")) {
-                return staticServerBaseUrl + attributeValue;
-            }
-            return attributeValue; // Return original value if no update is needed
-        }
-    
-        // Iterate over all elements in the document
-        const allElements = document.querySelectorAll('*');
-        for(let element of allElements) {
-            // Iterate over all attributes of each element
-            for(let attribute of element.attributes) {
-                // Update the attribute value if it starts with "static/"
-                const updatedValue = updateUrl(attribute.value);
-                if(updatedValue !== attribute.value) { // Check if update is needed
-                    element.setAttribute(attribute.name, updatedValue);
-                }
-            }
-        }
-    });
-    
-  </script>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
