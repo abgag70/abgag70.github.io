@@ -1,0 +1,12 @@
+.list-group-overlay {
+    position: absolute;
+    width: 100%; /* Match width of the column */
+    top: 100%; /* Align directly below the input group */
+    left: 0;
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+
+.content .col-lg-8.col-10 {
+    position: relative;
+}

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script async=false>
+  
+    document.addEventListener("DOMContentLoaded", function() {
+        // Define the base URL of your static server
+        const staticServerBaseUrl = "https://di2yrj6u5iwlygd7qvzdqd5yzy0ahhum.lambda-url.ca-central-1.on.aws/";
+    
+        // Function to update the URL in the attribute value
+        function updateUrl(attributeValue) {
+            if(attributeValue && attributeValue.startsWith("static/")) {
+                return staticServerBaseUrl + attributeValue;
+            }
+            return attributeValue; // Return original value if no update is needed
+        }
+    
+        // Iterate over all elements in the document
+        const allElements = document.querySelectorAll('*');
+        for(let element of allElements) {
+            // Iterate over all attributes of each element
+            for(let attribute of element.attributes) {
+                // Update the attribute value if it starts with "static/"
+                const updatedValue = updateUrl(attribute.value);
+                if(updatedValue !== attribute.value) { // Check if update is needed
+                    element.setAttribute(attribute.name, updatedValue);
+                }
+            }
+        }
+    });
+    
+  </script>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Projet VIO-SIS</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Overpass:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+
+  <!-- Template Main CSS File -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+  <link href="static/assets/css/list-group.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: OnePage
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo" style="color:#000000;">Projet VIO-SIS - <span style="color:#e30513;"><strong>ULaval</strong></span></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo"><img src="static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}">Accueil</a></li>
+          <li class="dropdown"><a href="#"><span>Projet</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="/le-projet#formations_et_debut_de_projet">Formations et début de projet</a></li>
+              <li><a href="/le-projet#rapports">Rapports</a></li>
+              <li><a href="/le-projet#contenu">Contenu du projet</a></li>
+              <li><a href="/le-projet#ethique-et-methodologie">Éthique et Méthodologie</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#team">Équipe de recherche</a></li>
+          
+          <!-- Button
+          <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
+          -->
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header>
+  <!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center pb-0" style="opacity:1; background: url(https://projet-vio-sis.s3.valeria.science/static/public/hero-bg.jpg);">
+
+    <div class="container position-relative" >
+
+      <div class="row justify-content-center">
+        <div class="col-xl-7 col-lg-9 text-center">
+          <h1 class="text-dark">Projet VIO-SIS</h1>
+          <h2>Identifier, caractériser et comprendre les violences structurelles, institutionnelles et symboliques vécues par les femmxs pour les transformer</h2>
+        </div>
+      </div>
+
+      <div class="row icon-boxes">
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" >
+          <div class="icon-box shadow">
+            <div class="icon"><i class="ri-lightbulb-line"></i></div>
+            <h4 class="title"><a href="/le-projet#formations-et-debut-de-projet">Formations et début de projet</a></h4>
+            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" >
+          <div class="icon-box shadow">
+            <div class="icon"><i class="ri-article-line"></i></div>
+            <h4 class="title"><a href="/le-projet#rapports">Rapports</a></h4>
+            <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" >
+          <div class="icon-box shadow">
+            <div class="icon"><i class="ri-box-3-line"></i></div>
+            <h4 class="title"><a href="/le-projet#contenu">Contenu</a></h4>
+            <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" >
+          <div class="icon-box shadow">
+            <div class="icon"><i class="ri-attachment-2"></i></div>
+            <h4 class="title"><a href="/le-projet#ethique-et-methodologie">Éthique et Méthodologie</a></h4>
+            <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+          </div>
+        </div>
+
+      </div>
+     
+      <!--
+      <div class="row py-5">
+
+        <div class="section-title mt-5">
+          <h2 class="text-dark">Faire une recherche parmi le contenu du projet</h2>
+        </div>
+       
+      
+        <div class="row content justify-content-center">
+            <div class="col-lg-8 col-10">
+        
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder='Entrez un terme ou un concept ex : "intersectionalité",  "milieu carcéral", etc...' aria-label="" aria-describedby="basic-addon2">
+                </div>
+        
+                <div class="list-group-overlay px-1">
+                  <div class="list-group">
+
+
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List group item heading</h5>
+                        <p><span class="badge bg-dark">Rapport final</span></p>
+                      </div>
+                      <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                      <small>Donec id elit non mi porta.</small>
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List group item heading</h5>
+                        <small class="text-muted">3 days ago</small>
+                      </div>
+                      <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. </p>
+                      <small class="text-muted">Donec id elit non mi porta.</small>
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List group item heading</h5>
+                        <small class="text-muted">3 days ago</small>
+                      </div>
+                      <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                      <small class="text-muted">Donec id elit non mi porta.</small>
+                    </a>
+
+        
+                  </div>
+                </div>
+        
+            </div>
+        </div>
+
+      </div>
+      -->
+       
+    </div>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about pb-2">
+      <div class="container">
+
+        <div class="section-title">
+          <h2 class="text-dark">À propos du projet</h2>
+        </div>
+
+        <div class="row content">
+          <div class="col-lg-6">
+            <p>
+              Ce projet de recherche s’appuie sur l’expertise d’un collectif de chercheures féministes issues de quatre disciplines (administration, droit, éducation et criminologie) qui travaillent dans une perspective interdisciplinaire transversale.
+            </p>
+            <p>
+              Elles effectuent l’examen de la littérature qui porte sur les difficultés et les obstacles qui nuisent aux femmxs ainsi que sur les opportunités et les leviers qui s’offrent à elles dans deux axes précis, soit <strong>l’accès à la justice</strong> (axe 1) et <strong>l’accès à des milieux organisationnels et professionnels équitables et égalitaires</strong> (axe 2). Le choix du néologisme « femmxs » dans notre projet de recherche découle d’une décision commune prise par l’équipe afin d’être la plus inclusive possible.
+            </p>
+            <p>
+              Plus spécifiquement, les chercheures féministes procèdent à l’analyse de la littérature de certaines dimensions (7 thèmes) réparties autour de ces deux axes dans le but d’identifier, de caractériser et de mieux comprendre les Vio-SIS vécues par les femmxs.
+            </p>
+            
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0">
+            <p>
+              Les quatre sujets de recherche de l’axe de l’accès à la justice sont :
+            </p>
+            <ul>
+              <li>1. Femmxs et incarcération</li>
+              <li>2. Accès à la justice réparatrice pour les femmxs victimes d’actes criminels</li>
+              <li>3. Résolutions des conflits en contexte de violence conjugale et familiale</li>
+              <li>4. Accès aux droits économiques, sociaux et culturels pour les femmxs marginalisées en situation de pauvreté</li>
+            </ul>
+            <p>
+              Quant aux trois thèmes de recherche sur l’accès aux organisations, il s’agit des :
+            </p>
+            <ul>
+              <li>1. Organisations canadiennes et développement international et action humanitaire</li>
+              <li>2. Organisations sportives</li>
+              <li>3. Professions traditionnellement masculines</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- End About Section -->
+
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Équipe de recherche</h2>
+          <h4>Cochercheures</h4>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >
+            <div class="member">
+              <div class="member-img">
+                <img src="static/images/equipe/marie_claire_belleau.jpg" class="img-fluid" alt="">
+                <div class="social">
+                  <a href="https://www.fd.ulaval.ca/notre-faculte/repertoire-du-personnel/marie-claire-belleau"><i class="bi bi-person-workspace"></i></a>
+                  <a href="https://ca.linkedin.com/in/marieclairebelleau"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>Marie-Claire Belleau</h4>
+                <span>Professeure titulaire</span>
+                <span>Faculté de droit - Université Laval</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >
+            <div class="member">
+              <div class="member-img">
+                <img src="https://placehold.co/400" class="img-fluid" alt="">
+                <div class="social">
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>Joe Ducharme</h4>
+                <span>Rôle et titre</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >
+            <div class="member">
+              <div class="member-img">
+                <img src="https://placehold.co/400" class="img-fluid" alt="">
+                <div class="social">
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>Joe Ducharme</h4>
+                <span>Rôle et titre</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >
+            <div class="member">
+              <div class="member-img">
+                <img src="https://placehold.co/400" class="img-fluid" alt="">
+                <div class="social">
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>Joe Ducharme</h4>
+                <span>Rôle et titre</span>
+              </div>
+            </div>
+          </div>     
+
+        </div>
+    
+    <br>
+    <br>
+
+    <div class="section-title mb-4">
+      <h4>Auxiliaires de recherche</h4>
+      <br>
+      <h5>Emmanuelle Paquette Raynard, Bibliothécaire-conseil, Université Laval</h5>
+      <h5>Julie Émond, Technicienne en documentation, Université Laval</h5>
+      <h5>Suzanne Kirouac, Technicienne en administration, Université Laval</h5>
+    </div>
+
+    <div class="section-title mb-4">
+      <h4>Remerciements spéciaux à</h4>
+      <br>
+      <h5>Emmanuelle Paquette Raynard, Bibliothécaire-conseil, Université Laval</h5>
+      <h5>Julie Émond, Technicienne en documentation, Université Laval</h5>
+      <h5>Suzanne Kirouac, Technicienne en administration, Université Laval</h5>
+    </div>
+
+    </div>
+    </section>
+    <!-- End Team Section -->
+
+    <!-- ======= Pricing Section ======= -->
+    <section id="pricing" class="pricing">
+      <div class="container">
+
+        <div class="section-title">
+          <h2 class="text-dark">Présentation : Lancement du projet</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="row justify-content-center">
+
+          <div class="col-lg-8 col-md-8 mt-4 mt-lg-0 justify-content-center text-center" data-aos="zoom-in" >
+            
+            <video width="100%" controls class="shadow-lg">
+              <source src="https://projet-vio-sis.s3.valeria.science/static/public/documents/index/obstacles-et-leviers-pour-lacces-a-la-justice-lancement-narree.mp4"></video>
+                 
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+    <!-- End Pricing Section -->
+
+    
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta" style="background-color:black;">
+      <div class="container" data-aos="zoom-in">
+        <div class="text-center">
+          <h3>Demande de subvention</h3>
+          <p>Réponse à un appel de projet déposée le 20 février 2019 : "Études sur l’égalité des sexe et la violence fondée sur le sexe au Canada"</p>
+          <a class="cta-btn" target="_blank" href="https://projet-vio-sis.s3.valeria.science/static/public/documents/index/projet-ulaval-synthese-des-connaissances-1w001-1801192-c-section-i-proposition-technique-sans-cv.pdf">Télécharger la demande (PDF)</a>
+          <br>
+          <br>
+          <p>Présenté à</p>
+          <div class="row justify-content-center">
+            
+            <div class="col-6 col-md-2">
+              <img class="img-fluid" src="static/images/fegc.png">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Cta Section -->
+
+
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Foire aux questions</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="faq-list">
+          <ul>
+
+            <li>
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">Feugiat scelerisque varius morbi enim nunc? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+                </p>
+              </div>
+            </li>
+
+            <li>
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">Dolor sit amet consectetur adipiscing elit? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
+                </p>
+              </div>
+            </li>
+
+            <li>
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in.
+                </p>
+              </div>
+            </li>
+
+            <li>
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-5" class="collapsed">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque.
+                </p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+      </div>
+    </section>
+    <!-- End Frequently Asked Questions Section -->
+
+  </main>
+  <!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="container py-4 text-center">
+
+      <div class="row justify-content-center">
+        <div class="col-6 col-md-2 copyright text-center pt-3 pb-5">
+          <img class="img-fluid" src="static/images/ulaval_logo.png">
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col copyright text-center">
+          &copy; Tout droits réservés <strong><span>- Pre Marie-Claire Belleau</span></strong> - Faculté de droit - Université Laval
+        </div>
+
+      </div>
+    </div>
+
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="static/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="static/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+
+  
+</body>
+
+</html>
