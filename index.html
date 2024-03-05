@@ -1,6 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!--
+  CONSTANTES D'AFFICHAGE
+-->
+<script>
+  const membresDEquipe = [
+    {
+      name: "Marie-Claire Belleau",
+      role: "Professeure titulaire",
+      institution: "Faculté de droit - Université Laval",
+      imgSrc: "/static/images/equipe/marie_claire_belleau.jpg",
+      profileUrl: "https://www.fd.ulaval.ca/notre-faculte/repertoire-du-personnel/marie-claire-belleau",
+      linkedinUrl: "https://ca.linkedin.com/in/marieclairebelleau"
+    },
+    {
+      name: "Joe Ducharme",
+      role: "Rôle et titre",
+      institution: "",
+      imgSrc: "https://placehold.co/400",
+      profileUrl: "",
+      linkedinUrl: ""
+    },
+  ];
+</script>
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -238,6 +262,7 @@
         </div>
 
         <div class="row">
+
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >
             <div class="member">
               <div class="member-img">
@@ -336,7 +361,8 @@
           <div class="col-lg-8 col-md-8 mt-4 mt-lg-0 justify-content-center text-center" data-aos="zoom-in" >
             
             <video width="100%" controls class="shadow-lg">
-              <source src="https://projet-vio-sis.s3.valeria.science/static/public/documents/index/obstacles-et-leviers-pour-lacces-a-la-justice-lancement-narree.mp4"></video>
+              <source src="https://projet-vio-sis.s3.valeria.science/static/public/documents/index/obstacles-et-leviers-pour-lacces-a-la-justice-lancement-narree.mp4">
+            </video>
                  
           </div>
 
@@ -461,6 +487,35 @@
 
   <!-- Template Main JS File -->
   <script src="/static/assets/js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const row = document.querySelector('.row'); // Select the row where team members will be inserted
+
+    membresDEquipe.forEach(member => {
+      const memberHTML = `
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+          <div class="member">
+            <div class="member-img">
+              <img src="${member.imgSrc}" class="img-fluid" alt="">
+              <div class="social">
+                ${member.profileUrl ? `<a href="${member.profileUrl}"><i class="bi bi-person-workspace"></i></a>` : ''}
+                ${member.linkedinUrl ? `<a href="${member.linkedinUrl}"><i class="bi bi-linkedin"></i></a>` : ''}
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>${member.name}</h4>
+              <span>${member.role}</span>
+              ${member.institution ? `<span>${member.institution}</span>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+
+      row.innerHTML += memberHTML; // Append the member HTML to the row
+    });
+  }); 
+  </script>
 
   
 </body>
