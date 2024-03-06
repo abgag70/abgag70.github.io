@@ -155,7 +155,7 @@
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg pb-2 mb-0">
-      <div class="container" data-aos="">
+      <div class="container" data-aos="" id="analyses-container">
 
         <div class="row g-5 justify-content-center">
           <div class="col-md-8">
@@ -165,21 +165,6 @@
             <hr>
           </div>
         </div>
-
-        {% for analyse in analyses %}
-            <div class="row g-5 m-1 justify-content-center">
-                <div class="col-md-8">
-                    <h5 class="pb-2">
-                        <strong>{{ analyse.titre }}</strong> / <small><a class="laval-link" target="_blank" href="{{ analyse.url_auteur }}">{{ analyse.auteur }}</a></small>
-                    </h5>
-                    <p>
-                        {{ analyse.description }}
-                    </p>
-                    <a class="laval-link" target="_blank" href="{{ analyse.url_pdf }}"><p>Télécharger (PDF)</p></a>
-                </div>
-            </div>
-        {% endfor %}
-
 
       </div>
     </section><!-- End Sevices Section -->
