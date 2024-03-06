@@ -9,7 +9,7 @@
     auteur: "Catherine Rossi",
     url_auteur: "https://www.fss.ulaval.ca/notre-faculte/repertoire-du-personnel/catherine-rossi",
     description: "Cras aliquam pretium ex et laoreet. Curabitur fringilla purus in tellus laoreet pretium. Phasellus non urna sit amet massa imperdiet aliquam. Nam nibh felis, cursus nec nunc id, pharetra rhoncus lacus. Suspendisse sollicitudin diam id eros laoreet, in semper lacus scelerisque. Fusce id lorem lobortis, placerat nibh tincidunt, aliquam nisi.",
-    url_pdf: "https://projet-vio-sis.s3.valeria.science/static/public/documents/analyses-thematiques/catherine-rossi-justice-reparatrice.pdf"
+    url_pdf: "/analyses/thematiques/justice-reparatrice"
   },
   {
     titre: "Droits sociaux",
@@ -31,6 +31,27 @@
     url_auteur: "https://www.fsa.ulaval.ca/en/expert/isabelle-auclair/",
     description: "Cras aliquam pretium ex et laoreet. Curabitur fringilla purus in tellus laoreet pretium. Phasellus non urna sit amet massa imperdiet aliquam. Nam nibh felis, cursus nec nunc id, pharetra rhoncus lacus. Suspendisse sollicitudin diam id eros laoreet, in semper lacus scelerisque. Fusce id lorem lobortis, placerat nibh tincidunt, aliquam nisi.",
     url_pdf: "https://projet-vio-sis.s3.valeria.science/static/public/documents/analyses-thematiques/IsabelleAuclairCoopérationInternationale.pdf"
+  },
+  {
+    titre: "Femmxs et incarcération",
+    auteur: "Julie Desrosiers",
+    url_auteur: "https://www.fd.ulaval.ca/notre-faculte/repertoire-du-personnel/julie-desrosiers",
+    description: "Cras aliquam pretium ex et laoreet. Curabitur fringilla purus in tellus laoreet pretium. Phasellus non urna sit amet massa imperdiet aliquam. Nam nibh felis, cursus nec nunc id, pharetra rhoncus lacus. Suspendisse sollicitudin diam id eros laoreet, in semper lacus scelerisque. Fusce id lorem lobortis, placerat nibh tincidunt, aliquam nisi.",
+    url_pdf: "https://projet-vio-sis.s3.valeria.science/static/public/documents/analyses-thematiques/JulieDesrosiersFemmesincarcération.pdf"
+  },
+  {
+    titre: "Résolution des conflits",
+    auteur: "Marie Claire-Belleau",
+    url_auteur: "https://www.fd.ulaval.ca/notre-faculte/repertoire-du-personnel/marie-claire-belleau",
+    description: "Cras aliquam pretium ex et laoreet. Curabitur fringilla purus in tellus laoreet pretium. Phasellus non urna sit amet massa imperdiet aliquam. Nam nibh felis, cursus nec nunc id, pharetra rhoncus lacus. Suspendisse sollicitudin diam id eros laoreet, in semper lacus scelerisque. Fusce id lorem lobortis, placerat nibh tincidunt, aliquam nisi.",
+    url_pdf: "https://projet-vio-sis.s3.valeria.science/static/public/documents/analyses-thematiques/MarieClaireBelleauResolutiondesConflits.pdf"
+  },
+  {
+    titre: "Professions traditionnelles",
+    auteur: "Sophie Brière",
+    url_auteur: "https://www.fsa.ulaval.ca/en/expert/sophie-briere/",
+    description: "Cras aliquam pretium ex et laoreet. Curabitur fringilla purus in tellus laoreet pretium. Phasellus non urna sit amet massa imperdiet aliquam. Nam nibh felis, cursus nec nunc id, pharetra rhoncus lacus. Suspendisse sollicitudin diam id eros laoreet, in semper lacus scelerisque. Fusce id lorem lobortis, placerat nibh tincidunt, aliquam nisi.",
+    url_pdf: "https://projet-vio-sis.s3.valeria.science/static/public/documents/analyses-thematiques/SophieBrièreProfessionstraditionnelles.pdf"
   },
   ]
 </script>
@@ -190,14 +211,7 @@
         <div class="col copyright text-center">
           &copy; Tout droits réservés <strong><span>- Pre Marie-Claire Belleau</span></strong> - Faculté de droit - Université Laval
         </div>
-        {% comment %}
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
-        {% endcomment %}
+
       </div>
     </div>
 
@@ -234,7 +248,7 @@
                             <strong>${analyse.titre}</strong> / <small><a class="laval-link" target="_blank" href="${analyse.url_auteur}">${analyse.auteur}</a></small>
                         </h5>
                         <p>${analyse.description}</p>
-                        <a class="laval-link" target="_blank" href="${analyse.url_pdf}"><p>Télécharger (PDF)</p></a>
+                        <a class="laval-link" target="_blank" href="${analyse.url_pdf}"><p>Consulter</p></a>
                     </div>
                 </div>
             `;
