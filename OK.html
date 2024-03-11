@@ -3,29 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image Point Selector with User Input</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<title>Image Point Selector with Visual Points</title>
 <style>
-  body { font-family: Arial, sans-serif; }
   #imageContainer { position: relative; }
   img { max-width: 100%; cursor: crosshair; }
   #pointsList { max-height: 300px; overflow-y: auto; }
-  .point { color: red; position: absolute; }
+  .point { width: 3px; height: 3px; background-color: black; position: absolute; }
 </style>
 </head>
-<body>
+<body class="container py-4">
 
-<h2>Select Points on Your Image</h2>
-<input type="file" id="imageInput" accept="image/*">
-<br>
-<div id="imageContainer">
+<h2 class="mb-4">Select Points on Your Image</h2>
+<div class="custom-file mb-3">
+  <input type="file" class="custom-file-input" id="imageInput" accept="image/*">
+  <label class="custom-file-label" for="imageInput">Choose file</label>
+</div>
+<div id="imageContainer" class="mb-3">
   <img id="image" alt="Selectable Image" style="display:none;">
 </div>
-<button onclick="resetPoints()">Reset Points</button>
-<h3>Points:</h3>
-<ul id="pointsList"></ul>
+<button class="btn btn-primary" onclick="resetPoints()">Reset Points</button>
+<h3 class="mt-4">Points:</h3>
+<ul id="pointsList" class="list-group"></ul>
 
 <script>
   const imageInput = document.getElementById('imageInput');
+  const imageContainer = document.getElementById('imageContainer');
   const image = document.getElementById('image');
   const pointsList = document.getElementById('pointsList');
   let points = [];
@@ -37,6 +40,7 @@
       reader.onload = function(e) {
         image.src = e.target.result;
         image.style.display = 'block';
+        resetPoints(); // Clear existing points when a new image is loaded
       };
       reader.readAsDataURL(file);
     }
@@ -47,24 +51,46 @@
     const x = event.clientX - rect.left; // x position within the element.
     const y = event.clientY - rect.top;  // y position within the element.
 
-    points.push({x, y});
+    const pointElement = createPointElement(x, y);
+    imageContainer.appendChild(pointElement);
+
+    points.push({x, y, element: pointElement});
     displayPoints();
   });
+
+  function createPointElement(x, y) {
+    const element = document.createElement('div');
+    element.style.left = `${x - 1}px`; // Adjust so the center of the point is the clicked position
+    element.style.top = `${y - 1}px`;
+    element.classList.add('point');
+    return element;
+  }
 
   function displayPoints() {
     pointsList.innerHTML = '';
     points.forEach((point, index) => {
       const listItem = document.createElement('li');
+      listItem.classList.add('list-group-item');
       listItem.textContent = `Point ${index + 1}: (${point.x.toFixed(2)}, ${point.y.toFixed(2)})`;
       pointsList.appendChild(listItem);
     });
   }
 
   function resetPoints() {
+    points.forEach(point => {
+      point.element.remove(); // Remove point elements from the image
+    });
     points = [];
     displayPoints();
   }
-</script>
 
+  // Update file input label after file selection
+  $(".custom-file-input").on("change", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
