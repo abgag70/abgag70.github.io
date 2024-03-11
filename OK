@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Point Selector</title>
+<style>
+  body { font-family: Arial, sans-serif; }
+  #imageContainer { position: relative; }
+  img { max-width: 100%; cursor: crosshair; }
+  #pointsList { max-height: 300px; overflow-y: auto; }
+  .point { color: red; position: absolute; }
+</style>
+</head>
+<body>
+
+<h2>Select Points on Image</h2>
+<div id="imageContainer">
+  <img id="image" src="your-image-url-here" alt="Selectable Image">
+</div>
+<button onclick="resetPoints()">Reset Points</button>
+<h3>Points:</h3>
+<ul id="pointsList"></ul>
+
+<script>
+  const image = document.getElementById('image');
+  const pointsList = document.getElementById('pointsList');
+  let points = [];
+
+  image.addEventListener('click', function(event) {
+    const rect = this.getBoundingClientRect();
+    const x = event.clientX - rect.left; // x position within the element.
+    const y = event.clientY - rect.top;  // y position within the element.
+
+    points.push({x, y});
+    displayPoints();
+  });
+
+  function displayPoints() {
+    pointsList.innerHTML = '';
+    points.forEach((point, index) => {
+      const listItem = document.createElement('li');
+      listItem.textContent = `Point ${index + 1}: (${point.x.toFixed(2)}, ${point.y.toFixed(2)})`;
+      pointsList.appendChild(listItem);
+    });
+  }
+
+  function resetPoints() {
+    points = [];
+    displayPoints();
+  }
+</script>
+
+</body>
+</html>
