@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image Point Selector</title>
+<title>Image Point Selector with User Input</title>
 <style>
   body { font-family: Arial, sans-serif; }
   #imageContainer { position: relative; }
@@ -14,18 +14,33 @@
 </head>
 <body>
 
-<h2>Select Points on Image</h2>
+<h2>Select Points on Your Image</h2>
+<input type="file" id="imageInput" accept="image/*">
+<br>
 <div id="imageContainer">
-  <img id="image" src="your-image-url-here" alt="Selectable Image">
+  <img id="image" alt="Selectable Image" style="display:none;">
 </div>
 <button onclick="resetPoints()">Reset Points</button>
 <h3>Points:</h3>
 <ul id="pointsList"></ul>
 
 <script>
+  const imageInput = document.getElementById('imageInput');
   const image = document.getElementById('image');
   const pointsList = document.getElementById('pointsList');
   let points = [];
+
+  imageInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        image.src = e.target.result;
+        image.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
   image.addEventListener('click', function(event) {
     const rect = this.getBoundingClientRect();
