@@ -69,12 +69,14 @@
   function displayPoints() {
     pointsList.innerHTML = '';
     points.forEach((point, index) => {
-      const listItem = document.createElement('li');
-      listItem.classList.add('list-group-item');
-      listItem.textContent = `Point ${index + 1}: (${point.x.toFixed(2)}, ${point.y.toFixed(2)})`;
-      pointsList.appendChild(listItem);
-    });
+        const listItem = document.createElement('li');
+        listItem.classList.add('list-group-item');
+        // Use Math.round to convert the coordinates to integers
+        listItem.textContent = `Point ${index + 1}: (${Math.round(point.x)}, ${Math.round(point.y)})`;
+        pointsList.appendChild(listItem);
+     });
   }
+
 
   function resetPoints() {
     points.forEach(point => {
