@@ -59,33 +59,43 @@
   });
 
   function createPointElement(x, y) {
+    // Container for the entire "X"
     const container = document.createElement('div');
     container.style.position = 'absolute';
-    container.style.left = `${x}px`; 
-    container.style.top = `${y}px`;
+    container.style.left = `${x - 2}px`; // Centering the "X" on the clicked point
+    container.style.top = `${y - 2}px`;
 
-    // Create two diagonal lines
-    const createLine = (dx, dy) => {
-      const line = document.createElement('div');
-      line.style.position = 'absolute';
-      line.style.width = '1px'; // Thin line
-      line.style.height = '5px'; // Length of the line
-      line.style.backgroundColor = 'red';
-      line.style.left = `${dx}px`;
-      line.style.top = `${dy}px`;
-      line.style.transform = 'rotate(45deg)';
-      line.style.transformOrigin = 'bottom left';
-      return line;
+    // Function to create each end of the "X"
+    const createXEnd = (dx, dy) => {
+      const end = document.createElement('div');
+      end.style.position = 'absolute';
+      end.style.width = '1px';
+      end.style.height = '1px';
+      end.style.backgroundColor = 'red';
+      end.style.left = `${dx}px`;
+      end.style.top = `${dy}px`;
+      return end;
     };
 
-    const line1 = createLine(0, 0);
-    line1.style.transform = 'rotate(45deg)';
+    // Adjust these values to change the size of the "X"
+    const size = 2; // Distance from the center to the end of each line of the "X"
 
-    const line2 = createLine(0, 0);
-    line2.style.transform = 'rotate(-45deg)';
+    // Creating and positioning each end of the "X"
+    const ends = [
+      createXEnd(-size, -size), // Top-left
+      createXEnd(size, -size),  // Top-right
+      createXEnd(-size, size),  // Bottom-left
+      createXEnd(size, size)    // Bottom-right
+    ];
 
-    container.appendChild(line1);
-    container.appendChild(line2);
+    // Add a small center piece to complete the "X"
+    const center = createXEnd(0, 0);
+    center.style.width = '3px';
+    center.style.height = '3px';
+
+    // Append the ends and the center to the container
+    ends.forEach(end => container.appendChild(end));
+    container.appendChild(center);
 
     return container;
   }
