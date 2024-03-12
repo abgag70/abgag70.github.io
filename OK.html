@@ -20,7 +20,7 @@
   <label class="custom-file-label" for="imageInput">Choose file</label>
 </div>
 <div id="imageContainer" class="mb-3">
-  <img id="image" class="text-center img-fluid" alt="Selectable Image" style="display:none;">
+  <img id="image" alt="Selectable Image" style="display:none;">
 </div>
 <button class="btn btn-primary" onclick="resetPoints()">Reset Points</button>
 <h3 class="mt-4">Points:</h3>
@@ -59,45 +59,11 @@
   });
 
   function createPointElement(x, y) {
-    // Container for the entire "X"
-    const container = document.createElement('div');
-    container.style.position = 'absolute';
-    container.style.left = `${x - 2}px`; // Centering the "X" on the clicked point
-    container.style.top = `${y - 2}px`;
-
-    // Function to create each end of the "X"
-    const createXEnd = (dx, dy) => {
-      const end = document.createElement('div');
-      end.style.position = 'absolute';
-      end.style.width = '1px';
-      end.style.height = '1px';
-      end.style.backgroundColor = 'red';
-      end.style.left = `${dx}px`;
-      end.style.top = `${dy}px`;
-      return end;
-    };
-
-    // Adjust these values to change the size of the "X"
-    const size = 2; // Distance from the center to the end of each line of the "X"
-
-    // Creating and positioning each end of the "X"
-    const ends = [
-      createXEnd(-size, -size), // Top-left
-      createXEnd(size, -size),  // Top-right
-      createXEnd(-size, size),  // Bottom-left
-      createXEnd(size, size)    // Bottom-right
-    ];
-
-    // Add a small center piece to complete the "X"
-    const center = createXEnd(0, 0);
-    center.style.width = '3px';
-    center.style.height = '3px';
-
-    // Append the ends and the center to the container
-    ends.forEach(end => container.appendChild(end));
-    container.appendChild(center);
-
-    return container;
+    const element = document.createElement('div');
+    element.style.left = `${x - 1}px`; // Adjust so the center of the point is the clicked position
+    element.style.top = `${y - 1}px`;
+    element.classList.add('point');
+    return element;
   }
 
   function displayPoints() {
