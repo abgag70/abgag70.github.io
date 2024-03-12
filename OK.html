@@ -59,11 +59,35 @@
   });
 
   function createPointElement(x, y) {
-    const element = document.createElement('div');
-    element.style.left = `${x - 1}px`; // Adjust so the center of the point is the clicked position
-    element.style.top = `${y - 1}px`;
-    element.classList.add('point');
-    return element;
+    const container = document.createElement('div');
+    container.style.position = 'absolute';
+    container.style.left = `${x}px`; 
+    container.style.top = `${y}px`;
+
+    // Create two diagonal lines
+    const createLine = (dx, dy) => {
+      const line = document.createElement('div');
+      line.style.position = 'absolute';
+      line.style.width = '1px'; // Thin line
+      line.style.height = '5px'; // Length of the line
+      line.style.backgroundColor = 'red';
+      line.style.left = `${dx}px`;
+      line.style.top = `${dy}px`;
+      line.style.transform = 'rotate(45deg)';
+      line.style.transformOrigin = 'bottom left';
+      return line;
+    };
+
+    const line1 = createLine(0, 0);
+    line1.style.transform = 'rotate(45deg)';
+
+    const line2 = createLine(0, 0);
+    line2.style.transform = 'rotate(-45deg)';
+
+    container.appendChild(line1);
+    container.appendChild(line2);
+
+    return container;
   }
 
   function displayPoints() {
