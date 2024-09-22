@@ -88,28 +88,20 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> VertexOutput {
   return output;
 }
 
-fn srgbToLinear(c: vec3<f32>) -> vec3<f32> {
-  let b = 0.04045;
-  return vec3<f32>(
-    (c.r <= b) ? c.r / 12.92 : pow((c.r + 0.055) / 1.055, 2.4),
-    (c.g <= b) ? c.g / 12.92 : pow((c.g + 0.055) / 1.055, 2.4),
-    (c.b <= b) ? c.b / 12.92 : pow((c.b + 0.055) / 1.055, 2.4)
-  );
-}
-
 @group(0) @binding(0) var imgSampler: sampler;
 @group(0) @binding(1) var img: texture_external;
 
 @fragment
 fn main(@location(0) uv: vec2<f32>) -> @location(0) vec4<f32> {
+  // Sample the sRGB color from the video texture
   let srgbColor = textureSampleBaseClampToEdge(img, imgSampler, uv).rgb;
-  let linearRGB = srgbToLinear(srgbColor);
 
-  // Compute luminance (Y channel)
-  let Y = 0.2126 * linearRGB.r + 0.7152 * linearRGB.g + 0.0722 * linearRGB.b;
+  // Compute luminance (Y channel) directly from sRGB
+  let Y = 0.2126 * srgbColor.r + 0.7152 * srgbColor.g + 0.0722 * srgbColor.b;
 
-  // Adjust Y channel for better contrast
-  let adjustedY = pow(Y, 1.0 / 2.2); // Gamma correction
+  // Adjust Y channel to improve visibility
+  let adjustedY = Y * 1.5; // Increase brightness
+  adjustedY = clamp(adjustedY, 0.0, 1.0); // Ensure values are within [0,1]
 
   // Output the Y channel as grayscale
   return vec4<f32>(adjustedY, adjustedY, adjustedY, 1.0);
