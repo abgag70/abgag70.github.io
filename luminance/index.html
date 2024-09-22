@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>WebGPU Camera Feed RGB to XYZ</title>
+<title>WebGPU Camera Feed Y Channel Display</title>
 <style>
   body {
     margin: 0;
@@ -105,17 +105,14 @@ fn main(@location(0) uv: vec2<f32>) -> @location(0) vec4<f32> {
   let srgbColor = textureSampleBaseClampToEdge(img, imgSampler, uv).rgb;
   let linearRGB = srgbToLinear(srgbColor);
 
-  let X = 0.4124564 * linearRGB.r + 0.3575761 * linearRGB.g + 0.1804375 * linearRGB.b;
-  let Y = 0.2126729 * linearRGB.r + 0.7151522 * linearRGB.g + 0.0721750 * linearRGB.b;
-  let Z = 0.0193339 * linearRGB.r + 0.1191920 * linearRGB.g + 0.9503041 * linearRGB.b;
+  // Compute luminance (Y channel)
+  let Y = 0.2126 * linearRGB.r + 0.7152 * linearRGB.g + 0.0722 * linearRGB.b;
 
-  // Normalize XYZ for display purposes
-  let maxXYZ = max(max(X, Y), Z);
-  let scale = maxXYZ > 1.0 ? (1.0 / maxXYZ) : 1.0;
+  // Adjust Y channel for better contrast
+  let adjustedY = pow(Y, 1.0 / 2.2); // Gamma correction
 
-  let XYZColor = vec3<f32>(X, Y, Z) * scale;
-
-  return vec4<f32>(XYZColor, 1.0);
+  // Output the Y channel as grayscale
+  return vec4<f32>(adjustedY, adjustedY, adjustedY, 1.0);
 }
 `;
 
@@ -171,12 +168,10 @@ fn main(@location(0) uv: vec2<f32>) -> @location(0) vec4<f32> {
 
   function frame() {
     if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
-      // Update the external texture
       const externalTexture = device.importExternalTexture({
         source: video,
       });
 
-      // Create the bind group
       const bindGroup = device.createBindGroup({
         layout: bindGroupLayout,
         entries: [
@@ -191,7 +186,6 @@ fn main(@location(0) uv: vec2<f32>) -> @location(0) vec4<f32> {
         ],
       });
 
-      // Begin encoding commands
       const commandEncoder = device.createCommandEncoder();
 
       const textureView = context.getCurrentTexture().createView();
@@ -213,14 +207,11 @@ fn main(@location(0) uv: vec2<f32>) -> @location(0) vec4<f32> {
       passEncoder.draw(6);
       passEncoder.end();
 
-      // Finish encoding commands
       const commandBuffer = commandEncoder.finish();
 
-      // Submit commands
       device.queue.submit([commandBuffer]);
     }
 
-    // Request next frame
     requestAnimationFrame(frame);
   }
 
