@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WebGPU Camera Feed RGB to XYZ</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+  #canvas {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+  }
+</style>
+</head>
+<body>
+<video id="video" autoplay playsinline style="display:none;"></video>
+<canvas id="canvas"></canvas>
+<script type="module">
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+
+navigator.mediaDevices.getUserMedia({ video: true })
+  .then(stream => {
+    video.srcObject = stream;
+    video.play();
+
+    video.onloadedmetadata = () => {
+      init();
+    };
+  })
+  .catch(error => {
+    console.error('Error accessing the camera', error);
+  });
+
+async function init() {
+  if (!navigator.gpu) {
+    console.error('WebGPU not supported in this browser.');
+    return;
+  }
+
+  const adapter = await navigator.gpu.requestAdapter();
+  if (!adapter) {
+    console.error('Failed to get GPU adapter.');
+    return;
+  }
+
+  const device = await adapter.requestDevice();
+  const context = canvas.getContext('webgpu');
+
+  const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
+
+  context.configure({
+    device: device,
+    format: presentationFormat,
+    alphaMode: 'opaque',
+  });
+
+  const shaderCode = `
+struct VertexOutput {
+  @builtin(position) position: vec4<f32>,
+  @location(0) uv: vec2<f32>,
+};
+
+@vertex
+fn main(@builtin(vertex_index) vertexIndex: u32) -> VertexOutput {
+  var positions = array<vec2<f32>, 6>(
+    vec2<f32>(-1.0, -1.0),
+    vec2<f32>(1.0, -1.0),
+    vec2<f32>(-1.0, 1.0),
+    vec2<f32>(-1.0, 1.0),
+    vec2<f32>(1.0, -1.0),
+    vec2<f32>(1.0, 1.0)
+  );
+  var uvs = array<vec2<f32>, 6>(
+    vec2<f32>(0.0, 1.0),
+    vec2<f32>(1.0, 1.0),
+    vec2<f32>(0.0, 0.0),
+    vec2<f32>(0.0, 0.0),
+    vec2<f32>(1.0, 1.0),
+    vec2<f32>(1.0, 0.0)
+  );
+  var output: VertexOutput;
+  output.position = vec4<f32>(positions[vertexIndex], 0.0, 1.0);
+  output.uv = uvs[vertexIndex];
+  return output;
+}
+
+fn srgbToLinear(c: vec3<f32>) -> vec3<f32> {
+  let b = 0.04045;
+  return vec3<f32>(
+    (c.r <= b) ? c.r / 12.92 : pow((c.r + 0.055) / 1.055, 2.4),
+    (c.g <= b) ? c.g / 12.92 : pow((c.g + 0.055) / 1.055, 2.4),
+    (c.b <= b) ? c.b / 12.92 : pow((c.b + 0.055) / 1.055, 2.4)
+  );
+}
+
+@group(0) @binding(0) var imgSampler: sampler;
+@group(0) @binding(1) var img: texture_external;
+
+@fragment
+fn main(@location(0) uv: vec2<f32>) -> @location(0) vec4<f32> {
+  let srgbColor = textureSampleBaseClampToEdge(img, imgSampler, uv).rgb;
+  let linearRGB = srgbToLinear(srgbColor);
+
+  let X = 0.4124564 * linearRGB.r + 0.3575761 * linearRGB.g + 0.1804375 * linearRGB.b;
+  let Y = 0.2126729 * linearRGB.r + 0.7151522 * linearRGB.g + 0.0721750 * linearRGB.b;
+  let Z = 0.0193339 * linearRGB.r + 0.1191920 * linearRGB.g + 0.9503041 * linearRGB.b;
+
+  // Normalize XYZ for display purposes
+  let maxXYZ = max(max(X, Y), Z);
+  let scale = maxXYZ > 1.0 ? (1.0 / maxXYZ) : 1.0;
+
+  let XYZColor = vec3<f32>(X, Y, Z) * scale;
+
+  return vec4<f32>(XYZColor, 1.0);
+}
+`;
+
+  const shaderModule = device.createShaderModule({
+    code: shaderCode,
+  });
+
+  const sampler = device.createSampler({
+    magFilter: 'linear',
+    minFilter: 'linear',
+  });
+
+  const bindGroupLayout = device.createBindGroupLayout({
+    entries: [
+      {
+        binding: 0,
+        visibility: GPUShaderStage.FRAGMENT,
+        sampler: {
+          type: 'filtering',
+        },
+      },
+      {
+        binding: 1,
+        visibility: GPUShaderStage.FRAGMENT,
+        externalTexture: {},
+      },
+    ],
+  });
+
+  const pipelineLayout = device.createPipelineLayout({
+    bindGroupLayouts: [bindGroupLayout],
+  });
+
+  const pipeline = device.createRenderPipeline({
+    layout: pipelineLayout,
+    vertex: {
+      module: shaderModule,
+      entryPoint: 'main',
+    },
+    fragment: {
+      module: shaderModule,
+      entryPoint: 'main',
+      targets: [
+        {
+          format: presentationFormat,
+        },
+      ],
+    },
+    primitive: {
+      topology: 'triangle-list',
+    },
+  });
+
+  function frame() {
+    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+      // Update the external texture
+      const externalTexture = device.importExternalTexture({
+        source: video,
+      });
+
+      // Create the bind group
+      const bindGroup = device.createBindGroup({
+        layout: bindGroupLayout,
+        entries: [
+          {
+            binding: 0,
+            resource: sampler,
+          },
+          {
+            binding: 1,
+            resource: externalTexture,
+          },
+        ],
+      });
+
+      // Begin encoding commands
+      const commandEncoder = device.createCommandEncoder();
+
+      const textureView = context.getCurrentTexture().createView();
+
+      const renderPassDescriptor = {
+        colorAttachments: [
+          {
+            view: textureView,
+            clearValue: {r: 0, g: 0, b: 0, a: 1},
+            loadOp: 'clear',
+            storeOp: 'store',
+          },
+        ],
+      };
+
+      const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
+      passEncoder.setPipeline(pipeline);
+      passEncoder.setBindGroup(0, bindGroup);
+      passEncoder.draw(6);
+      passEncoder.end();
+
+      // Finish encoding commands
+      const commandBuffer = commandEncoder.finish();
+
+      // Submit commands
+      device.queue.submit([commandBuffer]);
+    }
+
+    // Request next frame
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>
