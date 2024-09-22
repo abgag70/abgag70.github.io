@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Details</title>
+</head>
+<body>
+    <h1>GPU Information</h1>
+    <pre id="gpuInfo"></pre>
+    <script>
+        async function getGPUInfo() {
+            if (!navigator.gpu) {
+                document.getElementById('gpuInfo').innerText = 'WebGPU is not supported by your browser.';
+                return;
+            }
+
+            const adapter = await navigator.gpu.requestAdapter();
+            if (!adapter) {
+                document.getElementById('gpuInfo').innerText = 'Failed to get GPU adapter.';
+                return;
+            }
+
+            const device = await adapter.requestDevice();
+            const info = device.features;
+            document.getElementById('gpuInfo').innerText = `GPU Name: ${adapter.name}\nFeatures: ${[...info].join(', ')}`;
+        }
+
+        getGPUInfo();
+    </script>
+</body>
+</html>
