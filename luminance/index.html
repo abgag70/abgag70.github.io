@@ -1,186 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>WebGPU Camera G Channel Transformation</title>
+<meta name="viewport" content="width=600">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<title>WebGPU Webcam Test</title>
+<style>
+body {
+    font-family: system-ui;
+    color: #f7f7ff;
+    background-color: rgb(38, 38, 127);
+    text-align: center;
+}
+canvas {
+    margin: 0 auto;
+}
+#btnStart {
+    
+}
+</style>
 </head>
-<body>
-    <video id="video" width="640" height="480" autoplay style="display: none;"></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
-
-    <script type="module">
-        async function main() {
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-
-            // Check for WebGPU support
-            if (!navigator.gpu) {
-                alert("WebGPU is not supported in this browser.");
-                return;
-            }
-
-            // Get the camera stream
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                video.srcObject = stream;
-                await video.play();
-            } catch (error) {
-                console.error('Error accessing the camera:', error);
-                return;
-            }
-
-            // Initialize WebGPU
-            const adapter = await navigator.gpu.requestAdapter();
-            const device = await adapter.requestDevice();
-
-            const context = canvas.getContext('webgpu');
-            const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
-
-            // Update: Specify the usage flags
-            context.configure({
-                device: device,
-                format: presentationFormat,
-                usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_DST,
-                alphaMode: 'opaque',
-            });
-
-            // Create a texture to hold the video frame
-            const videoTexture = device.createTexture({
-                size: [canvas.width, canvas.height],
-                format: 'rgba8unorm',
-                usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST,
-            });
-
-            // Create a sampler for the texture
-            const sampler = device.createSampler({
-                magFilter: 'linear',
-                minFilter: 'linear',
-            });
-
-            // Shader code in WGSL
-            const shaderCode = `
-                @group(0) @binding(0) var videoFrame: texture_2d<f32>;
-                @group(0) @binding(1) var videoSampler: sampler;
-
-                struct VertexOutput {
-                    @builtin(position) position: vec4<f32>,
-                    @location(0) uv: vec2<f32>,
-                };
-
-                @vertex
-                fn vertexMain(@builtin(vertex_index) vertexIndex: u32) -> VertexOutput {
-                    var positions = array<vec2<f32>, 4>(
-                        vec2<f32>(-1.0,  1.0), // Top-left
-                        vec2<f32>(-1.0, -1.0), // Bottom-left
-                        vec2<f32>( 1.0,  1.0), // Top-right
-                        vec2<f32>( 1.0, -1.0)  // Bottom-right
-                    );
-
-                    var uvs = array<vec2<f32>, 4>(
-                        vec2<f32>(0.0, 0.0), // Top-left
-                        vec2<f32>(0.0, 1.0), // Bottom-left
-                        vec2<f32>(1.0, 0.0), // Top-right
-                        vec2<f32>(1.0, 1.0)  // Bottom-right
-                    );
-
-                    let position = positions[vertexIndex];
-                    let uv = uvs[vertexIndex];
-
-                    var output: VertexOutput;
-                    output.position = vec4<f32>(position, 0.0, 1.0);
-                    output.uv = uv;
-                    return output;
-                }
-
-                @fragment
-                fn fragmentMain(@location(0) uv: vec2<f32>) -> @location(0) vec4<f32> {
-                    var color = textureSample(videoFrame, videoSampler, uv);
-
-                    // Multiply the G channel by 0.9
-                    color.g = color.g * 0.9;
-
-                    return color;
-                }
-            `;
-
-            // Create shader module
-            const shaderModule = device.createShaderModule({ code: shaderCode });
-
-            // Create pipeline
-            const pipeline = device.createRenderPipeline({
-                layout: 'auto',
-                vertex: {
-                    module: shaderModule,
-                    entryPoint: 'vertexMain',
-                },
-                fragment: {
-                    module: shaderModule,
-                    entryPoint: 'fragmentMain',
-                    targets: [
-                        {
-                            format: presentationFormat,
-                        },
-                    ],
-                },
-                primitive: {
-                    topology: 'triangle-strip',
-                },
-            });
-
-            // Create bind group
-            const bindGroup = device.createBindGroup({
-                layout: pipeline.getBindGroupLayout(0),
-                entries: [
-                    {
-                        binding: 0,
-                        resource: videoTexture.createView(),
-                    },
-                    {
-                        binding: 1,
-                        resource: sampler,
-                    },
-                ],
-            });
-
-            // Rendering function
-            async function render() {
-                // Copy the current video frame to the texture
-                device.queue.copyExternalImageToTexture(
-                    { source: video },
-                    { texture: videoTexture },
-                    [canvas.width, canvas.height]
-                );
-
-                const commandEncoder = device.createCommandEncoder();
-                const textureView = context.getCurrentTexture().createView();
-
-                const renderPassDescriptor = {
-                    colorAttachments: [
-                        {
-                            view: textureView,
-                            loadOp: 'clear',
-                            clearValue: { r: 0, g: 0, b: 0, a: 1 },
-                            storeOp: 'store',
-                        },
-                    ],
-                };
-
-                const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
-                passEncoder.setPipeline(pipeline);
-                passEncoder.setBindGroup(0, bindGroup);
-                passEncoder.draw(4);
-                passEncoder.end();
-
-                device.queue.submit([commandEncoder.finish()]);
-
-                requestAnimationFrame(render);
-            }
-
-            // Start rendering
-            requestAnimationFrame(render);
-        }
-
-        main();
-    </script>
+<body onload="start();">
+<div id="contents">
+    <video id="videoElement"></video><br>
+    <button id="btnStart" disabled onclick="onBtnStartClick(this)">Start</button><br>
+    <button id="btnStop" disabled onclick="onBtnStopClick(this)">Stop</button><br>
+    <canvas id="gpuCanvas" width="640px" height="480px"></canvas>
+</div>
+<script src="webgpuwebcamtest.js"></script>
 </body>
 </html>
