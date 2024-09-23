@@ -100,7 +100,7 @@ fn main(@location(0) uv: vec2<f32>) -> @location(0) vec4<f32> {
   let Y = 0.2126 * srgbColor.r + 0.7152 * srgbColor.g + 0.0722 * srgbColor.b;
 
   // Adjust Y channel to improve visibility
-  let adjustedY = Y * 1.5; // Increase brightness
+  let adjustedY = Y * 255; // Increase brightness
   adjustedY = clamp(adjustedY, 0.0, 1.0); // Ensure values are within [0,1]
 
   // Output the Y channel as grayscale
