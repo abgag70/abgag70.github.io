@@ -8,8 +8,8 @@ function start() {
     const constraints = {
         video: {
             facingMode: "environment",
-            width: { ideal: window.innerWidth },
-            height: { ideal: window.innerHeight },
+            width: { ideal: window.innerHeight },
+            height: { ideal: window.innerWidth },
             frameRate: { ideal: 60 },
         }
     };
