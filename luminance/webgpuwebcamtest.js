@@ -2,12 +2,29 @@
 var cubeTexture;
 var video;
 
+
+
 function start() {
+
+    const constraints = {
+    video: {
+        facingMode: "environment",
+        width: { ideal: 4096 },
+        height: { ideal: 2160 },
+        frameRate: { ideal: 60 },
+        advanced: [
+            { width: 3840, height: 2160 },
+            { width: 2560, height: 1440 },
+            { width: 1920, height: 1080 }
+        ]
+    }
+};
+    
     video = document.querySelector("#videoElement");
     let btnStart = document.querySelector("#btnStart");
 
     if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        navigator.mediaDevices.getUserMedia(constraints)
         .then(function (stream) {
             video.srcObject = stream;
             btnStart.disabled = false;
