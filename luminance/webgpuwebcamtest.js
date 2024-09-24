@@ -110,7 +110,7 @@ fn vertex_main(@location(0) position: vec4f,
 fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
 {
     let sampledColor = textureSampleBaseClampToEdge(myTexture, mySampler, fragData.fragUV);
-    return vec4f(sampledColor.y, sampledColor.y, sampledColor.y, sampledColor.a);
+    return vec4f(pow(sampledColor.y, 2.2), pow(sampledColor.y, 2.2),  pow(sampledColor.y, 2.2), sampledColor.a);
 }
 
 `;
