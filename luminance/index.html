@@ -1,45 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=600">
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<title>WebGPU Webcam Test</title>
-<style>
-body {
-    font-family: system-ui;
-    color: #f7f7ff;
-    background-color: rgb(38, 38, 127);
-    text-align: center;
-}
-canvas {
-    margin: 0 auto;
-    display: block;
-}
+    <meta name="viewport" content="width=600">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>WebGPU Webcam Test</title>
+    <style>
+        body {
+            font-family: system-ui;
+            color: #f7f7ff;
+            background-color: rgb(38, 38, 127);
+            text-align: center;
+        }
+        canvas {
+            margin: 0 auto;
+            display: block;
+        }
 
-/* Hide the video feed */
-#videoElement {
-    display: none;
-}
+        /* Hide the video feed */
+        #videoElement {
+            display: none;
+        }
 
-#btnStart, #btnStop {
-    margin: 10px;
-}
-</style>
+        #btnStart, #btnStop, #btnFullscreen {
+            margin: 10px;
+        }
+
+        /* Full-screen styling for the canvas */
+        .fullscreen {
+            width: 100vw !important;
+            height: 100vh !important;
+        }
+    </style>
 </head>
 <body onload="start();">
-<div id="contents">
-    <!-- Hide this video element -->
-    <video id="videoElement"></video><br>
+    <div id="contents">
+        <!-- Hide this video element -->
+        <video id="videoElement"></video><br>
 
-    <!-- Control buttons -->
-    <button id="btnStart" disabled onclick="onBtnStartClick(this)">Start</button><br>
-    <button id="btnStop" disabled onclick="onBtnStopClick(this)">Stop</button><br>
+        <!-- Control buttons -->
+        <button id="btnStart" disabled onclick="onBtnStartClick(this)">Start</button><br>
+        <button id="btnStop" disabled onclick="onBtnStopClick(this)">Stop</button><br>
+        
+        <!-- Button to toggle full-screen mode -->
+        <button id="btnFullscreen" onclick="toggleFullscreen()">Toggle Fullscreen</button><br>
 
-    <!-- GPU-rendered canvas -->
-    <canvas id="gpuCanvas" width="100vw" height="auto"></canvas>
-</div>
+        <!-- GPU-rendered canvas -->
+        <canvas id="gpuCanvas" width="600" height="400"></canvas>
+    </div>
 
-<!-- Include the WebGPU script -->
-<script src="webgpuwebcamtest.js"></script>
+    <!-- Include screenfull.js from a CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/5.2.0/screenfull.min.js"></script>
+    <!-- Include the WebGPU script -->
+    <script src="webgpuwebcamtest.js"></script>
+
+    <script>
+        // Function to toggle fullscreen for the canvas
+        function toggleFullscreen() {
+            const canvas = document.getElementById('gpuCanvas');
+            
+            if (screenfull.isEnabled) {
+                screenfull.toggle(canvas);
+            }
+        }
+
+        // Listen for screen change events to update button text (optional)
+        if (screenfull.isEnabled) {
+            screenfull.on('change', () => {
+                const isFullScreen = screenfull.isFullscreen;
+                const canvas = document.getElementById('gpuCanvas');
+                
+                if (isFullScreen) {
+                    canvas.classList.add('fullscreen');
+                } else {
+                    canvas.classList.remove('fullscreen');
+                }
+            });
+        }
+    </script>
 </body>
 </html>
