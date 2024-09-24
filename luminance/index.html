@@ -13,19 +13,33 @@ body {
 }
 canvas {
     margin: 0 auto;
+    display: block;
 }
-#btnStart {
-    
+
+/* Hide the video feed */
+#videoElement {
+    display: none;
+}
+
+#btnStart, #btnStop {
+    margin: 10px;
 }
 </style>
 </head>
 <body onload="start();">
 <div id="contents">
+    <!-- Hide this video element -->
     <video id="videoElement"></video><br>
+
+    <!-- Control buttons -->
     <button id="btnStart" disabled onclick="onBtnStartClick(this)">Start</button><br>
     <button id="btnStop" disabled onclick="onBtnStopClick(this)">Stop</button><br>
+
+    <!-- GPU-rendered canvas -->
     <canvas id="gpuCanvas" width="100vw" height="auto"></canvas>
 </div>
+
+<!-- Include the WebGPU script -->
 <script src="webgpuwebcamtest.js"></script>
 </body>
 </html>
