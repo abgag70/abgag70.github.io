@@ -88,12 +88,20 @@ fn vertex_main(@location(0) position: vec4f,
   return output;
 }
 
+//@fragment
+//fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
+//{
+    //return textureSampleBaseClampToEdge(myTexture, mySampler, fragData.fragUV);
+    //return fragData.color;
+//}
+
 @fragment
 fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
 {
-    return textureSampleBaseClampToEdge(myTexture, mySampler, fragData.fragUV);
-    //return fragData.color;
+    let sampledColor = textureSampleBaseClampToEdge(myTexture, mySampler, fragData.fragUV);
+    return vec4f(sampledColor.r, sampledColor.g * 0.5, sampledColor.b, sampledColor.a);
 }
+
 `;
 
 // Main function
