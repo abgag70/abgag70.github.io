@@ -7,7 +7,7 @@ function start() {
     let btnStart = document.querySelector("#btnStart");
 
     if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" })
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then(function (stream) {
             video.srcObject = stream;
             btnStart.disabled = false;
