@@ -44,8 +44,8 @@
         <!-- Button to toggle full-screen mode -->
         <button id="btnFullscreen" onclick="toggleFullscreen()">Toggle Fullscreen</button><br>
 
-        <!-- GPU-rendered canvas -->
-        <canvas id="gpuCanvas" width="600px" height="auto"></canvas>
+        <!-- GPU-rendered canvas without fixed dimensions -->
+        <canvas id="gpuCanvas"></canvas>
     </div>
 
     <!-- Include screenfull.js from a CDN -->
@@ -76,6 +76,20 @@
                 }
             });
         }
+
+        // Adjust the canvas size to match the video feed dimensions
+        const videoElement = document.getElementById('videoElement');
+        const canvas = document.getElementById('gpuCanvas');
+
+        videoElement.addEventListener('loadedmetadata', () => {
+            // Set the canvas dimensions to match the video feed
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+
+            // Optionally, adjust the canvas style to reflect the new dimensions
+            canvas.style.width = videoElement.videoWidth + 'px';
+            canvas.style.height = videoElement.videoHeight + 'px';
+        });
     </script>
 </body>
 </html>
