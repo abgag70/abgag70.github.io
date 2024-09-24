@@ -1,31 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=600">
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<title>WebGPU Webcam Test</title>
-<style>
-body {
-    font-family: system-ui;
-    color: #f7f7ff;
-    background-color: rgb(38, 38, 127);
-    text-align: center;
-}
-canvas {
-    margin: 0 auto;
-}
-#btnStart {
-    
-}
-</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>WebGPU Webcam Test</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui;
+            color: #f7f7ff;
+            background-color: rgb(38, 38, 127);
+        }
+        #gpuCanvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            background-color: black; /* Just to visualize the canvas area */
+        }
+        #controls {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            text-align: center;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body onload="start();">
-<div id="contents">
-    <!-- <video id="videoElement"></video><br> -->
-    <button id="btnStart" disabled onclick="onBtnStartClick(this)">Start</button><br>
-    <button id="btnStop" disabled onclick="onBtnStopClick(this)">Stop</button><br>
-    <canvas id="gpuCanvas" width="100vw" height="auto"></canvas>
-</div>
-<script src="webgpuwebcamtest.js"></script>
+    <canvas id="gpuCanvas"></canvas>
+    <div id="controls">
+        <button id="btnStart" disabled onclick="onBtnStartClick(this)">Start</button>
+        <button id="btnStop" disabled onclick="onBtnStopClick(this)">Stop</button>
+    </div>
+    <script src="webgpuwebcamtest.js"></script>
 </body>
 </html>
