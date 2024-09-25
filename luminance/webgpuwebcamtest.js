@@ -157,9 +157,16 @@ fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
 
     // Return the final color with normalized LUT values
     // return fragData.color;
+
     let sampledColor = textureSampleBaseClampToEdge(myTexture, mySampler, fragData.fragUV);
     let luminance_gamma_corrected = pow(sampledColor.y, 2.2);
     let clamped_luminance = clamp(luminance_gamma_corrected * 255.0, 0.0, 255.0);
+    let index = i32(clamped_luminance);
+
+    let r_lut = lutR[index] / 255.0;
+    let g_lut = lutG[index] / 255.0;
+    let b_lut = lutB[index] / 255.0;
+
     return vec4f(luminance_gamma_corrected, luminance_gamma_corrected,  luminance_gamma_corrected, sampledColor.a);
 }
 
