@@ -158,7 +158,8 @@ fn fragment_main(fragData: VertexOut) -> @location(0) vec4f {
     let b_lut = lutB[index] / 255.0;
 
     // Return the final color with normalized LUT values
-    return vec4f(r_lut, g_lut, b_lut, sampledColor.a);
+    return fragData.color;
+    // return vec4f(r_lut, g_lut, b_lut, sampledColor.a);
 
 }
 
