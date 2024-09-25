@@ -8,11 +8,17 @@ function start() {
     const constraints = {
         video: {
             facingMode: "environment",
-            width: { ideal: window.innerHeight },
-            height: { ideal: window.innerWidth },
+            width: { ideal: 4096 },
+            height: { ideal: 2160 },
             frameRate: { ideal: 60 },
+            advanced: [
+                { width: 3840, height: 2160 },
+                { width: 2560, height: 1440 },
+                { width: 1920, height: 1080 }
+            ]
         }
     };
+        
     
     video = document.querySelector("#videoElement");
     let btnStart = document.querySelector("#btnStart");
