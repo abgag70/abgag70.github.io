@@ -167,7 +167,7 @@ fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
     let g_lut = lutG[index] / 255.0;
     let b_lut = lutB[index] / 255.0;
 
-    return vec4f(luminance_gamma_corrected, luminance_gamma_corrected,  luminance_gamma_corrected, sampledColor.a);
+    return vec4f(r_lut, g_lut,  b_lut, sampledColor.a);
 }
 
 `;
