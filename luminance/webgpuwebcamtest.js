@@ -144,7 +144,7 @@ fn fragment_main(fragData: VertexOut) -> @location(0) vec4f {
     let sampledColor = textureSampleExternal(myTexture, mySampler, fragData.fragUV);
 
     // Apply gamma correction to the luminance (assuming luminance is in the green channel)
-    let luminance_gamma_corrected = pow(sampledColor.g, 2.2);
+    let luminance_gamma_corrected = pow(sampledColor.y, 2.2);
 
     // Scale luminance to [0, 255] and clamp
     let clamped_luminance = clamp(luminance_gamma_corrected * 255.0, 0.0, 255.0);
