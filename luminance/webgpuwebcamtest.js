@@ -7,7 +7,7 @@ var video;
 function start() {
     const constraints = {
         video: {
-            // facingMode: "environment",
+            facingMode: "environment",
             width: { ideal: 4096 },
             height: { ideal: 2160 },
             frameRate: { ideal: 60 },
