@@ -148,12 +148,12 @@ fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
     let clamped_luminance_gamma_corrected = clamp(luminance_gamma_corrected * 255.0, 0.0, 255.0);
 
     // Look up the raw values from the LUT and normalize them
-    let r_lut = lutR[i32(r)] / 255.0;
-    let g_lut = lutG[i32(g)] / 255.0;
-    let b_lut = lutB[i32(b)] / 255.0;
+    let r_lut = lutR[i32(clamped_luminance_gamma_corrected)] / 255.0;
+    let g_lut = lutG[i32(clamped_luminance_gamma_corrected)] / 255.0;
+    let b_lut = lutB[i32(clamped_luminance_gamma_corrected)] / 255.0;
 
     // Return the final color with normalized LUT values
-    return vec4<f32>(r_lut, g_lut, b_lut, 1.0);
+    return vec4<f32>(r_lut, g_lut, b_lut, sampledColor.a);
 }
 
 `;
