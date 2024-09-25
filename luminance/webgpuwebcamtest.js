@@ -1,4 +1,4 @@
-//var streamRunning = false;
+
 var cubeTexture;
 var video;
 
