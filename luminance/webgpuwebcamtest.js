@@ -113,7 +113,7 @@ fn vertex_main(@location(0) position: vec4f,
 //}
 
 @fragment
-fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
+fn fragment_main(fragData: VertexOut) -> @location(0) vec4f {
     // Hardcoded LUT for R, G, and B (raw values from 0-255)
     const lutR: array<f32, 256> = array<f32, 256>(
         131.0, 132.0, 133.0, 134.0, 136.0, 137.0, 139.0, 141.0, 143.0, 145.0, 148.0, 150.0, 153.0, 155.0, 157.0, 160.0,
@@ -153,7 +153,7 @@ fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
     let b_lut = lutB[i32(clamped_luminance_gamma_corrected)] / 255.0;
 
     // Return the final color with normalized LUT values
-    return vec4f<f32>(r_lut, g_lut, b_lut, sampledColor.a);
+    return vec4f(r_lut, g_lut, b_lut, sampledColor.a);
 }
 
 `;
