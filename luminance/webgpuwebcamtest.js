@@ -87,6 +87,7 @@ const verticeeeees = new Float32Array([
 // Main function
 
 async function init(gamma) {
+    let gammaStr = gamma.toString();
     let shaders = `
         @group(0) @binding(0) var mySampler: sampler;
         @group(0) @binding(1) var myTexture: texture_external;
