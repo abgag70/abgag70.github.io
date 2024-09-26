@@ -36,7 +36,7 @@
         <video id="videoElement"></video><br>
 
         <!-- Control buttons -->
-        <button id="btnStart" class="btn btn-primary w-100 mb-2" disabled onclick="onBtnStartClickWithGamma(this)"><h3>Start</h3></button>
+        <button id="btnStart" class="btn btn-primary w-100 mb-2" disabled onclick="onBtnStartClick(this)"><h3>Start</h3></button>
         <button id="btnStop" class="btn btn-danger w-100 mb-2" disabled onclick="onBtnStopClick(this)"><h3>Stop</h3></button>
         
         <!-- Button to toggle full-screen mode -->
@@ -60,10 +60,6 @@
     <script src="webgpuwebcamtest.js"></script>
 
     <script>
-        let gamma = 1.0;
-         function onBtnStartClickWithGamma(btn) {
-            onBtnStartClick(btn, gamma);
-         }
         // Function to toggle fullscreen for the canvas
         function toggleFullscreen() {
             const canvas = document.getElementById('gpuCanvas');
