@@ -104,7 +104,7 @@
         gammaInput.addEventListener('input', (event) => {
             const gammaValue = parseFloat(event.target.value);
             gamma = gammaValue;  // Call the imported start() function with the updated gamma value
-            onBtnStartClickWithGamma();
+            init(gamma);
         });
     </script>
 </body>
