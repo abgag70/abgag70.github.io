@@ -30,7 +30,7 @@
         }
     </style>
 </head>
-<body onload="start(1.0);" class="text-dark bg-light">
+<body onload="start();" class="text-dark bg-light">
     <div id="contents" class="container text-center py-5">
         <!-- Hide this video element -->
         <video id="videoElement"></video><br>
@@ -99,7 +99,7 @@
         const gammaInput = document.getElementById('gammaInput');
         gammaInput.addEventListener('input', (event) => {
             const gammaValue = parseFloat(event.target.value);
-            start(gammaValue);  // Call the imported start() function with the updated gamma value
+            init(gammaValue);  // Call the imported start() function with the updated gamma value
         });
     </script>
 </body>
