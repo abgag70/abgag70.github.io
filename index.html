@@ -1,32 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPU Details</title>
-</head>
-<body>
-    <h1>GPU Information</h1>
-    <pre id="gpuInfo"></pre>
-    <script>
-        async function getGPUInfo() {
-            if (!navigator.gpu) {
-                document.getElementById('gpuInfo').innerText = 'WebGPU is not supported by your browser.';
-                return;
-            }
+    <meta name="viewport" content="width=600">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Luminance viewer</title>
 
-            const adapter = await navigator.gpu.requestAdapter();
-            if (!adapter) {
-                document.getElementById('gpuInfo').innerText = 'Failed to get GPU adapter.';
-                return;
-            }
+    <!-- Include Bootstrap CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-            const device = await adapter.requestDevice();
-            const info = device.features;
-            document.getElementById('gpuInfo').innerText = `GPU Name: ${adapter.name}\nFeatures: ${[...info].join(', ')}`;
+    <style>
+        body {
+            font-family: system-ui;
+            text-align: center;
+        }
+        canvas {
+            margin: 0 auto;
+            display: block;
         }
 
-        getGPUInfo();
+        /* Hide the video feed */
+        #videoElement {
+            display: none;
+        }
+
+        /* Full-screen styling for the canvas */
+        .fullscreen {
+            width: 100vw !important;
+            height: 100vh !important;
+        }
+    </style>
+</head>
+<body onload="start();" class="text-dark bg-light">
+    <div id="contents" class="container text-center py-5">
+        <!-- Hide this video element -->
+        <video id="videoElement"></video><br>
+
+        <!-- Control buttons -->
+        <button id="btnStart" class="btn btn-primary w-100 mb-2" onclick="onBtnStartClick(this)"><h3>Start</h3></button>
+        <button id="btnStop" class="btn btn-danger w-100 mb-2" disabled onclick="onBtnStopClick(this)"><h3>Stop</h3></button>
+        
+        <!-- Button to toggle full-screen mode -->
+        <button id="btnFullscreen" class="btn btn-secondary w-100 mb-2" onclick="toggleFullscreen()"><h3>Fullscreen</h3></button>
+        
+        <!-- Gamma input box -->
+        <!-- 
+        <div class="mb-3">
+            <label for="gammaInput" class="form-label"><h4>Gamma</h4></label>
+            <input type="number" id="gammaInput" class="form-control" value="1.0" min="0.1" max="5.0" step="0.01">
+        </div>
+        -->
+        
+        <!-- GPU-rendered canvas without fixed dimensions -->
+        <canvas id="gpuCanvas"></canvas>
+    </div>
+
+    <!-- Include screenfull.js from a CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/5.2.0/screenfull.min.js"></script>
+    <!-- Include the WebGPU script -->
+    <script src="webgpuwebcamtest.js"></script>
+
+    <script>
+        // Function to toggle fullscreen for the canvas
+        function toggleFullscreen() {
+            const canvas = document.getElementById('gpuCanvas');
+            
+            if (screenfull.isEnabled) {
+                screenfull.toggle(canvas);
+            }
+        }
+
+        // Listen for screen change events to update button text (optional)
+        if (screenfull.isEnabled) {
+            screenfull.on('change', () => {
+                const isFullScreen = screenfull.isFullscreen;
+                const canvas = document.getElementById('gpuCanvas');
+                
+                if (isFullScreen) {
+                    canvas.classList.add('fullscreen');
+                } else {
+                    canvas.classList.remove('fullscreen');
+                }
+            });
+        }
+
+        // Adjust the canvas size to match the video feed dimensions
+        const videoElement = document.getElementById('videoElement');
+        const canvas = document.getElementById('gpuCanvas');
+
+        videoElement.addEventListener('loadedmetadata', () => {
+            // Set the canvas dimensions to match the video feed
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+
+            // Optionally, adjust the canvas style to reflect the new dimensions
+            canvas.style.width = videoElement.videoWidth + 'px';
+            canvas.style.height = videoElement.videoHeight + 'px';
+        });
     </script>
 </body>
 </html>
