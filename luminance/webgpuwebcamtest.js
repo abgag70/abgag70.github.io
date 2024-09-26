@@ -1,7 +1,8 @@
 var cubeTexture;
 var video;
+var isStarted = false;
 
-function start(gamma) {
+function start() {
     const constraints = {
         video: {
             facingMode: "environment",
@@ -42,6 +43,7 @@ function onBtnStartClick(btn) {
     btnStop.disabled = false;
 
     init();
+    
 }
 
 function onBtnStopClick(btn) {
@@ -138,26 +140,6 @@ const lutB = array(
 @fragment
 fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
 {
-    // Sample the texture using the external texture sampling function
-    // let sampledColor = textureSampleExternal(myTexture, mySampler, fragData.fragUV);
-
-    // Apply gamma correction to the luminance (assuming luminance is in the green channel)
-    // let luminance_gamma_corrected = pow(sampledColor.y, 0.9);
-
-    // Scale luminance to [0, 255] and clamp
-    // let clamped_luminance = clamp(luminance_gamma_corrected * 255.0, 0.0, 255.0);
-
-    // Convert to integer index for LUT
-    // let index = i32(clamped_luminance);
-
-    // Look up the values from the LUT and normalize them
-    // let r_lut = lutR[index] / 255.0;
-    // let g_lut = lutG[index] / 255.0;
-    // let b_lut = lutB[index] / 255.0;
-
-    // Return the final color with normalized LUT values
-    // return fragData.color;
-
     let sampledColor = textureSampleBaseClampToEdge(myTexture, mySampler, fragData.fragUV);
     let luminance_gamma_corrected = pow(sampledColor.y, 1.0); // pow(sampledColor.y, 2.2);
     let clamped_luminance = clamp(luminance_gamma_corrected * 255.0, 0.0, 255.0);
@@ -174,7 +156,8 @@ fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
 
 // Main function
 
-async function init() {
+async function init(gamma) {
+    
   // 1: request adapter and device
   if (!navigator.gpu) {
     throw Error('WebGPU not supported.');
