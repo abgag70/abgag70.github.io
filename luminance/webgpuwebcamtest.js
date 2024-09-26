@@ -1,7 +1,7 @@
 var cubeTexture;
 var video;
 
-function start() {
+function start(gamma) {
     const constraints = {
         video: {
             facingMode: "environment",
