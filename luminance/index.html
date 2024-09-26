@@ -100,14 +100,6 @@
             canvas.style.width = videoElement.videoWidth + 'px';
             canvas.style.height = videoElement.videoHeight + 'px';
         });
-        
-        // Listen for changes to the gamma input
-        const gammaInput = document.getElementById('gammaInput');
-        gammaInput.addEventListener('input', (event) => {
-            const gammaValue = parseFloat(event.target.value);
-            gamma = gammaValue;  // Call the imported start() function with the updated gamma value
-            init(gamma);
-        });
     </script>
 </body>
 </html>
