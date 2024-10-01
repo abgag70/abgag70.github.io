@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multi-Exposure Bracket Capture</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Basic styles */
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, button { font-size: 1em; padding: 10px; margin: 5px 0; width: 100%; }
+        video { width: 100%; max-height: 400px; display: none; }
+        #photos { display: flex; flex-wrap: wrap; }
+        #photos img { width: 100px; margin: 5px; }
+    </style>
+</head>
+<body>
+
+<h1>Multi-Exposure Bracket Capture</h1>
+
+<p>Enter exposure times (shutter speeds) in milliseconds, separated by commas:</p>
+<input type="text" id="exposureTimes" placeholder="e.g., 100,200,400,800">
+<button id="startButton">Start Capturing</button>
+
+<video id="video" autoplay playsinline></video>
+
+<div id="photos"></div>
+
+<script>
+    const exposureInput = document.getElementById('exposureTimes');
+    const startButton = document.getElementById('startButton');
+    const video = document.getElementById('video');
+    const photosDiv = document.getElementById('photos');
+
+    startButton.addEventListener('click', () => {
+        let exposureTimes = exposureInput.value.split(',').map(t => parseFloat(t.trim()));
+
+        if (exposureTimes.some(isNaN)) {
+            alert('Please enter valid exposure times.');
+            return;
+        }
+
+        startCapturing(exposureTimes);
+    });
+
+    async function startCapturing(exposureTimes) {
+        try {
+            const constraints = {
+                video: {
+                    facingMode: 'environment',
+                }
+            };
+
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            video.srcObject = stream;
+            const track = stream.getVideoTracks()[0];
+
+            const imageCapture = new ImageCapture(track);
+
+            const photoCapabilities = await imageCapture.getPhotoCapabilities();
+
+            // Attempt to set manual modes if supported
+            const trackConstraints = {};
+
+            if (photoCapabilities.exposureMode.includes('manual')) {
+                trackConstraints.exposureMode = 'manual';
+            }
+
+            if (photoCapabilities.whiteBalanceMode.includes('manual')) {
+                trackConstraints.whiteBalanceMode = 'manual';
+            }
+
+            if (photoCapabilities.focusMode.includes('manual')) {
+                trackConstraints.focusMode = 'manual';
+            }
+
+            await track.applyConstraints(trackConstraints);
+
+            // Now, for each exposure time, capture a photo
+            for (let exposureTimeMs of exposureTimes) {
+                // exposureTime is in milliseconds, convert to seconds
+                let exposureTime = exposureTimeMs / 1000;
+
+                const settings = {};
+
+                if (photoCapabilities.exposureMode.includes('manual')) {
+                    settings.exposureMode = 'manual';
+                }
+
+                if (photoCapabilities.exposureTime) {
+                    const minExposure = photoCapabilities.exposureTime.min;
+                    const maxExposure = photoCapabilities.exposureTime.max;
+
+                    if (exposureTime < minExposure || exposureTime > maxExposure) {
+                        console.warn(`Exposure time ${exposureTime}s out of range (${minExposure}s - ${maxExposure}s).`);
+                        continue;
+                    }
+                    settings.exposureTime = exposureTime;
+                } else {
+                    console.warn('Exposure time setting not supported.');
+                }
+
+                try {
+                    const blob = await imageCapture.takePhoto(settings);
+                    displayPhoto(blob);
+                } catch (err) {
+                    console.error('Error taking photo:', err);
+                }
+            }
+
+            // Stop the video track after capturing
+            track.stop();
+
+        } catch (err) {
+            console.error('Error accessing the camera:', err);
+            alert('Error accessing the camera or setting parameters. Your device might not support manual control.');
+        }
+    }
+
+    function displayPhoto(blob) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(blob);
+        photosDiv.appendChild(img);
+    }
+</script>
+
+</body>
+</html>
