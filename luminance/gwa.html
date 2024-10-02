@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Back Camera Feeds</title>
+    <style>
+        video {
+            width: 30%;
+            height: auto;
+            margin: 5px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Back Camera Feeds</h1>
+    <div id="videos"></div>
+    <script>
+        (async () => {
+            // Request permission to use media devices
+            await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+
+            // Enumerate devices
+            let devices = await navigator.mediaDevices.enumerateDevices();
+
+            // Filter video input devices
+            let videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+            console.log("Video devices:", videoDevices);
+
+            const videosDiv = document.getElementById('videos');
+
+            for (let device of videoDevices) {
+                let constraints = {
+                    video: { deviceId: { exact: device.deviceId } }
+                };
+                try {
+                    let stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    let track = stream.getVideoTracks()[0];
+                    let settings = track.getSettings();
+                    console.log('Device:', device.label, 'Settings:', settings);
+                    if (settings.facingMode === 'environment') {
+                        // This is a back camera
+                        let video = document.createElement('video');
+                        video.srcObject = stream;
+                        video.autoplay = true;
+                        video.playsInline = true;
+                        videosDiv.appendChild(video);
+                    } else {
+                        // Not a back camera
+                        // Stop the track
+                        track.stop();
+                    }
+                } catch (err) {
+                    console.error('Error accessing device', device, err);
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
