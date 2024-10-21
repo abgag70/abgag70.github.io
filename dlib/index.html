@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Min Global with WebAssembly</title>
+</head>
+<body>
+    <h1>Find Minimum Global with Dlib and WebAssembly</h1>
+    <button id="run">Run Find Min Global</button>
+    <p id="output"></p>
+
+    <script src="find_min_global.js"></script>
+    <script>
+        // Load the WebAssembly module
+        createFindMinGlobalModule().then(function(Module) {
+            console.log("WebAssembly module loaded successfully.");
+
+            // Function that represents Holder's Table problem (objective function)
+            const holder_table = Module.addFunction(function(x0, x1) {
+                return -Math.abs(Math.sin(x0) * Math.cos(x1) * Math.exp(Math.abs(1 - Math.sqrt(x0 * x0 + x1 * x1) / Math.PI)));
+            }, 'ddd');
+
+            // Run the find_min_global_with_calls function when the button is clicked
+            document.getElementById("run").addEventListener("click", function() {
+                // Define the bounds and max function calls
+                const lower_bounds = [-10, -10];
+                const upper_bounds = [10, 10];
+                const max_calls = 1000;
+
+                // Call the WebAssembly function
+                const result = Module.ccall('find_min_global_with_calls', // Function name in C++
+                                            'array',  // Return type
+                                            ['number', 'array', 'array', 'number'], // Argument types
+                                            [holder_table, lower_bounds, upper_bounds, max_calls]); // Arguments
+
+                // Display the result
+                document.getElementById("output").innerText = `Minimized value at (x0: ${result[0]}, x1: ${result[1]}), with minimum value: ${result[2]}`;
+            });
+        });
+    </script>
+</body>
+</html>
