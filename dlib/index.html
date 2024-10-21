@@ -10,32 +10,57 @@
     <button id="run">Run Find Min Global</button>
     <p id="output"></p>
 
-    <script src="find_min_global.js"></script>
+    <script src="find_min_global_no_thread.js"></script>
     <script>
-        // Load the WebAssembly module
+        class JsFunction { // Encapsulate a JS function to pass as an object in C++
+            theFunc = () => 0.0; // Function that does nothing and returns 0.0
+            constructor(theFunc) {
+                this.theFunc = theFunc;
+            }
+            bang(x, y) {
+                return this.theFunc(x, y);
+            }
+        }
         createFindMinGlobalModule().then(function(Module) {
             console.log("WebAssembly module loaded successfully.");
+    
+            // Define Holder's Table objective function
+            // const holder_table = Module.addFunction(function(x0, x1) {
+            //     return -Math.abs(Math.sin(x0) * Math.cos(x1) * Math.exp(Math.abs(1 - Math.sqrt(x0 * x0 + x1 * x1) / Math.PI)));
+            // }, 'ddd');
 
-            // Function that represents Holder's Table problem (objective function)
-            const holder_table = Module.addFunction(function(x0, x1) {
-                return -Math.abs(Math.sin(x0) * Math.cos(x1) * Math.exp(Math.abs(1 - Math.sqrt(x0 * x0 + x1 * x1) / Math.PI)));
-            }, 'ddd');
-
-            // Run the find_min_global_with_calls function when the button is clicked
+            const holder_table = function(x0, x1) {
+            //     x1 = x1;
+            //     return -Math.abs(Math.sin(x0) * Math.cos(x1) * Math.exp(Math.abs(1 - Math.sqrt(x0 * x0 + x1 * x1) / Math.PI)));
+            const a = 1;     // parameter a
+            const b = 100;   // parameter b
+            // Rosenbrock function formula
+            return Math.pow(a - x0, 2) + b * Math.pow(x1 - x0 * x0, 2);
+            }
+            let jsFunc = new JsFunction(holder_table);
+    
+            // Call the WebAssembly function when the button is clicked
             document.getElementById("run").addEventListener("click", function() {
-                // Define the bounds and max function calls
-                const lower_bounds = [-10, -10];
-                const upper_bounds = [10, 10];
-                const max_calls = 1000;
-
+                const lower_bounds = new Module.VectorDouble();
+                lower_bounds.push_back(-100);
+                lower_bounds.push_back(-100);
+    
+                const upper_bounds = new Module.VectorDouble();
+                upper_bounds.push_back(100);
+                upper_bounds.push_back(100);
+    
+                const max_calls = 167;
+    
                 // Call the WebAssembly function
-                const result = Module.ccall('find_min_global_with_calls', // Function name in C++
-                                            'array',  // Return type
-                                            ['number', 'array', 'array', 'number'], // Argument types
-                                            [holder_table, lower_bounds, upper_bounds, max_calls]); // Arguments
-
+                const result = Module.find_min_global_with_calls(jsFunc, lower_bounds, upper_bounds, max_calls);
+                console.log(result.get(0));
+                console.log(result.get(1));
+                // Clean up vector memory
+                lower_bounds.delete();
+                upper_bounds.delete();
+    
                 // Display the result
-                document.getElementById("output").innerText = `Minimized value at (x0: ${result[0]}, x1: ${result[1]}), with minimum value: ${result[2]}`;
+                document.getElementById("output").innerText = `Minimized value at (x0: ${result.get(0)}, x1: ${result.get(1)}), with minimum value: ${(1/100)*Math.round(100*result.get(2))}`;
             });
         });
     </script>
