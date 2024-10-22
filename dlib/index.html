@@ -23,15 +23,9 @@
         }
         createFindMinGlobalModule().then(function(Module) {
             console.log("WebAssembly module loaded successfully.");
-    
-            // Define Holder's Table objective function
-            // const holder_table = Module.addFunction(function(x0, x1) {
-            //     return -Math.abs(Math.sin(x0) * Math.cos(x1) * Math.exp(Math.abs(1 - Math.sqrt(x0 * x0 + x1 * x1) / Math.PI)));
-            // }, 'ddd');
 
             const holder_table = function(x0, x1) {
-            //     x1 = x1;
-            //     return -Math.abs(Math.sin(x0) * Math.cos(x1) * Math.exp(Math.abs(1 - Math.sqrt(x0 * x0 + x1 * x1) / Math.PI)));
+            // return -Math.abs(Math.sin(x0) * Math.cos(x1) * Math.exp(Math.abs(1 - Math.sqrt(x0 * x0 + x1 * x1) / Math.PI)));
             const a = 1;     // parameter a
             const b = 100;   // parameter b
             // Rosenbrock function formula
