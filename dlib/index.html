@@ -24,14 +24,20 @@
         createFindMinGlobalModule().then(function(Module) {
             console.log("WebAssembly module loaded successfully.");
 
-            const holder_table = function(x0, x1) {
-            // return -Math.abs(Math.sin(x0) * Math.cos(x1) * Math.exp(Math.abs(1 - Math.sqrt(x0 * x0 + x1 * x1) / Math.PI)));
-            const a = 1;     // parameter a
-            const b = 100;   // parameter b
-            // Rosenbrock function formula
-            return Math.pow(a - x0, 2) + b * Math.pow(x1 - x0 * x0, 2);
+            const rosenbrock5D = function(x0, x1, x2, x3, x4) {
+                const a = 1;   // Define constant a
+                const b = 100; // Define constant b
+            
+                // Compute the 5D Rosenbrock function
+                let result = 0;
+                result += (a - x0) ** 2 + b * (x1 - x0 ** 2) ** 2;
+                result += (a - x1) ** 2 + b * (x2 - x1 ** 2) ** 2;
+                result += (a - x2) ** 2 + b * (x3 - x2 ** 2) ** 2;
+                result += (a - x3) ** 2 + b * (x4 - x3 ** 2) ** 2;
+            
+                return result;
             }
-            let jsFunc = new JsFunction(holder_table);
+            let jsFunc = new JsFunction(rosenbrock5D);
     
             // Call the WebAssembly function when the button is clicked
             document.getElementById("run").addEventListener("click", function() {
@@ -54,7 +60,7 @@
                 upper_bounds.delete();
     
                 // Display the result
-                document.getElementById("output").innerText = `Minimized value at (x0: ${result.x.toString()}), with minimum value: ${result.y}`;
+                document.getElementById("output").innerText = `Minimized value at [${result.x.toString()}], \nMinimum y value: ${result.y.toFixed(20);}`;
             });
         });
     </script>
