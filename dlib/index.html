@@ -47,14 +47,14 @@
     
                 // Call the WebAssembly function
                 const result = Module.find_min_global_with_calls(jsFunc, lower_bounds, upper_bounds, max_calls);
-                console.log(result.get(0));
-                console.log(result.get(1));
+                console.log(result.x);
+                console.log(result.y);
                 // Clean up vector memory
                 lower_bounds.delete();
                 upper_bounds.delete();
     
                 // Display the result
-                document.getElementById("output").innerText = `Minimized value at (x0: ${result.get(0)}, x1: ${result.get(1)}), with minimum value: ${(1/100)*Math.round(100*result.get(2))}`;
+                document.getElementById("output").innerText = `Minimized value at (x0: ${result.x.toString()}), with minimum value: ${result.y}`;
             });
         });
     </script>
