@@ -10,15 +10,15 @@
     <button id="run">Run Find Min Global</button>
     <p id="output"></p>
 
-    <script src="find_min_global_no_thread.js"></script>
+    <script src="find_min_global_m.js"></script>
     <script>
         class JsFunction { // Encapsulate a JS function to pass as an object in C++
             theFunc = () => 0.0; // Function that does nothing and returns 0.0
             constructor(theFunc) {
                 this.theFunc = theFunc;
             }
-            bang(x, y) {
-                return this.theFunc(x, y);
+            bang(argsArray) {
+                return this.theFunc(...argsArray); // unpack args Array and call function
             }
         }
         createFindMinGlobalModule().then(function(Module) {
