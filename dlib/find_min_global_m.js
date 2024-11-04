@@ -1,5 +1,5 @@
 
-var createFindMinGlobalModule = (() => {
+var createMaxLipoTrPluslModule = (() => {
   var _scriptName = typeof document != 'undefined' ? document.currentScript?.src : undefined;
   if (typeof __filename != 'undefined') _scriptName = _scriptName || __filename;
   return (
@@ -1231,7 +1231,7 @@ function dbg(...args) {
     }
   /** @param {Object=} options */
   function registerType(rawType, registeredInstance, options = {}) {
-      if (!('argPackAdvance' in registeredInstance)) {
+      if (registeredInstance.argPackAdvance === undefined) {
         throw new TypeError('registerType registeredInstance requires argPackAdvance');
       }
       return sharedRegisterType(rawType, registeredInstance, options);
@@ -1606,17 +1606,14 @@ function dbg(...args) {
         // We are exposing a function with the same name as an existing function. Create an overload table and a function selector
         // that routes between the two.
         ensureOverloadTable(Module, name, name);
-        if (Module.hasOwnProperty(numArguments)) {
+        if (Module[name].overloadTable.hasOwnProperty(numArguments)) {
           throwBindingError(`Cannot register multiple overloads of a function with the same number of arguments (${numArguments})!`);
         }
         // Add the new function into the overload table.
         Module[name].overloadTable[numArguments] = value;
-      }
-      else {
+      } else {
         Module[name] = value;
-        if (undefined !== numArguments) {
-          Module[name].numArguments = numArguments;
-        }
+        Module[name].argCount = numArguments;
       }
     };
   
@@ -1870,8 +1867,7 @@ function dbg(...args) {
       // If there's an overload table for this symbol, replace the symbol in the overload table instead.
       if (undefined !== Module[name].overloadTable && undefined !== numArguments) {
         Module[name].overloadTable[numArguments] = value;
-      }
-      else {
+      } else {
         Module[name] = value;
         Module[name].argCount = numArguments;
       }
@@ -6973,7 +6969,7 @@ function run() {
     return;
   }
 
-    stackCheckInit();
+  stackCheckInit();
 
   if (!calledPrerun) {
     calledPrerun = 1;
@@ -7107,6 +7103,6 @@ for (const prop of Object.keys(Module)) {
 );
 })();
 if (typeof exports === 'object' && typeof module === 'object')
-  module.exports = createFindMinGlobalModule;
+  module.exports = createMaxLipoTrPluslModule;
 else if (typeof define === 'function' && define['amd'])
-  define([], () => createFindMinGlobalModule);
+  define([], () => createMaxLipoTrPluslModule);
