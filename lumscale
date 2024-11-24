@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Gradient</title>
+</head>
+<body>
+  <canvas id="myCanvas" width="400" height="400" style="border:1px solid #000;"></canvas>
+  <script>
+    // Get the canvas element
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Create a vertical gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    gradient.addColorStop(0, 'blue'); // Top color
+    gradient.addColorStop(1, 'green'); // Bottom color
+
+    // Use the gradient to fill a rectangle
+    ctx.fillStyle = gradient;
+    ctx.fillRect(50, 50, 300, 300); // Draw the rectangle
+  </script>
+</body>
+</html>
