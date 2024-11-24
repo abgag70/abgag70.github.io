@@ -5,12 +5,12 @@
 		<link rel="icon" href="/miraihdr/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		
-		<link rel="modulepreload" href="/miraihdr/_app/immutable/entry/start.l4TieJCR.js">
-		<link rel="modulepreload" href="/miraihdr/_app/immutable/chunks/entry.4ttU_LyA.js">
-		<link rel="modulepreload" href="/miraihdr/_app/immutable/chunks/scheduler.RcbWK4TV.js">
-		<link rel="modulepreload" href="/miraihdr/_app/immutable/chunks/index.CFo_ocDA.js">
-		<link rel="modulepreload" href="/miraihdr/_app/immutable/entry/app.CSUsxFtW.js">
-		<link rel="modulepreload" href="/miraihdr/_app/immutable/chunks/index.CQXzAaBX.js">
+		<link rel="modulepreload" href="/miraihdr/app/immutable/entry/start.l4TieJCR.js">
+		<link rel="modulepreload" href="/miraihdr/app/immutable/chunks/entry.4ttU_LyA.js">
+		<link rel="modulepreload" href="/miraihdr/app/immutable/chunks/scheduler.RcbWK4TV.js">
+		<link rel="modulepreload" href="/miraihdr/app/immutable/chunks/index.CFo_ocDA.js">
+		<link rel="modulepreload" href="/miraihdr/app/immutable/entry/app.CSUsxFtW.js">
+		<link rel="modulepreload" href="/miraihdr/app/immutable/chunks/index.CQXzAaBX.js">
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">
@@ -24,8 +24,8 @@
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("/miraihdr/_app/immutable/entry/start.l4TieJCR.js"),
-						import("/miraihdr/_app/immutable/entry/app.CSUsxFtW.js")
+						import("/miraihdr/app/immutable/entry/start.l4TieJCR.js"),
+						import("/miraihdr/app/immutable/entry/app.CSUsxFtW.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element);
 					});
