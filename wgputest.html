@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGPU Example</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="webgpu-canvas" width="800" height="600"></canvas>
+    
+    <script>
+        // Initialize WebGPU
+        async function initializeWebGPU() {
+            const canvas = document.getElementById("webgpu-canvas");
+            const context = canvas.getContext("webgpu");
+
+            const device = await navigator.gpu.requestDevice();
+            const adapter = await navigator.gpu.requestAdapter();
+            const format = "bgra8unorm";
+            context.configure({
+                device,
+                format,
+                usage: GPUTextureUsage.RENDER_ATTACHMENT,
+            });
+
+            // Create a pipeline for rendering background (light grey)
+            const vertexShaderCode = `
+                struct VertexIn {
+                    @location(0) position : vec2<f32>;
+                };
+                @stage(vertex)
+                fn main(input : VertexIn) -> @builtin(position) vec4<f32> {
+                    return vec4<f32>(input.position, 0.0, 1.0);
+                }
+            `;
+
+            const fragmentShaderCodeLightGrey = `
+                @stage(fragment)
+                fn main() -> @location(0) vec4<f32> {
+                    return vec4<f32>(0.8, 0.8, 0.8, 1.0); // Light grey color for background
+                }
+            `;
+
+            const shaderModuleLightGrey = device.createShaderModule({
+                code: vertexShaderCode + fragmentShaderCodeLightGrey,
+            });
+
+            // Create the pipeline for drawing background
+            const pipelineLightGrey = device.createRenderPipeline({
+                vertex: {
+                    module: shaderModuleLightGrey,
+                    entryPoint: "main",
+                },
+                fragment: {
+                    module: shaderModuleLightGrey,
+                    entryPoint: "main",
+                },
+                primitive: {
+                    topology: "triangle-list",
+                },
+                colorStates: [
+                    {
+                        format,
+                    },
+                ],
+            });
+
+            // Create a pipeline for drawing the cross (darker grey)
+            const fragmentShaderCodeDarkGrey = `
+                @stage(fragment)
+                fn main() -> @location(0) vec4<f32> {
+                    return vec4<f32>(0.5, 0.5, 0.5, 1.0); // Darker grey for the cross
+                }
+            `;
+
+            const shaderModuleDarkGrey = device.createShaderModule({
+                code: vertexShaderCode + fragmentShaderCodeDarkGrey,
+            });
+
+            // Create the pipeline for drawing the cross
+            const pipelineDarkGrey = device.createRenderPipeline({
+                vertex: {
+                    module: shaderModuleLightGrey, // We use the same vertex shader for cross as for the background
+                    entryPoint: "main",
+                },
+                fragment: {
+                    module: shaderModuleDarkGrey,
+                    entryPoint: "main",
+                },
+                primitive: {
+                    topology: "line-list",  // We draw lines (cross lines)
+                },
+                colorStates: [
+                    {
+                        format,
+                    },
+                ],
+            });
+
+            // Create buffer for rectangle vertices (for drawing a cross)
+            const crossVertices = new Float32Array([
+                // Horizontal line of the cross
+                -0.25, 0.0, 0.25, 0.0,
+                // Vertical line of the cross
+                0.0, -0.25, 0.0, 0.25,
+            ]);
+
+            const crossVertexBuffer = device.createBuffer({
+                size: crossVertices.byteLength,
+                usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
+                mappedAtCreation: true,
+            });
+            new Float32Array(crossVertexBuffer.getMappedRange()).set(crossVertices);
+            crossVertexBuffer.unmap();
+
+            // Load image and draw it
+            async function loadImage(imageURL) {
+                const img = new Image();
+                img.src = imageURL;
+                await new Promise((resolve) => img.onload = resolve);
+                
+                // Upload image to WebGPU
+                const imageBitmap = await createImageBitmap(img);
+                const texture = device.createTexture({
+                    size: {
+                        width: imageBitmap.width,
+                        height: imageBitmap.height,
+                    },
+                    usage: GPUTextureUsage.SAMPLED | GPUTextureUsage.COPY_DST,
+                    format: "bgra8unorm",
+                });
+                device.queue.copyExternalImageToTexture({ source: imageBitmap }, { texture }, [imageBitmap.width, imageBitmap.height]);
+                
+                return texture;
+            }
+
+            const texture = await loadImage("path_to_image.jpg");
+
+            // Render loop
+            function render() {
+                const commandEncoder = device.createCommandEncoder();
+                const renderPassDescriptor = {
+                    colorAttachments: [
+                        {
+                            view: context.getCurrentTexture().createView(),
+                            loadValue: [0.8, 0.8, 0.8, 1.0], // Light grey for the background
+                            storeOp: "store",
+                        },
+                    ],
+                };
+
+                const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
+                
+                // First, fill with the background (light grey)
+                passEncoder.setPipeline(pipelineLightGrey);
+                passEncoder.draw(3, 1, 0, 0); // Draw background using a simple triangle
+
+                // Next, draw the cross in darker grey
+                passEncoder.setPipeline(pipelineDarkGrey);
+                passEncoder.setVertexBuffer(0, crossVertexBuffer);
+                passEncoder.draw(4, 1, 0, 0); // Draw cross (2 lines)
+
+                // Draw the image at the center of the canvas (This part requires proper texture handling, which is not yet added)
+                // You'd need additional pipeline setup to render the image, including shaders to map the image to a quad in the center.
+                
+                passEncoder.endPass();
+                device.queue.submit([commandEncoder.finish()]);
+            }
+
+            // Call render function to start rendering
+            render();
+        }
+
+        // Initialize WebGPU when the page loads
+        window.onload = initializeWebGPU;
+    </script>
+</body>
+</html>
