@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript AST Viewer</title>
+</head>
+<body>
+  <h1>TypeScript AST Viewer</h1>
+  <textarea id="code" rows="10" cols="80">// Write TypeScript code here</textarea>
+  <button id="generateAst">Generate AST</button>
+  <pre id="astOutput" style="background: #f4f4f4; padding: 10px; border: 1px solid #ddd;"></pre>
+
+  <script type="module">
+    // Import TypeScript from Skypack
+    import * as ts from "https://cdn.skypack.dev/typescript";
+
+    // Get references to the DOM elements
+    const codeInput = document.getElementById("code");
+    const astOutput = document.getElementById("astOutput");
+    const generateAstButton = document.getElementById("generateAst");
+
+    // Function to generate and display the AST
+    function generateAST() {
+      const sourceCode = codeInput.value;
+
+      // Create the source file (AST)
+      const sourceFile = ts.createSourceFile(
+        "example.ts",            // File name (used for errors, not required here)
+        sourceCode,              // Source code
+        ts.ScriptTarget.Latest,  // Target language version
+        true                     // Enable parent nodes
+      );
+
+      // Function to traverse and serialize the AST
+      function printAST(node, indent = 0) {
+        const syntaxKind = ts.SyntaxKind[node.kind];
+        const text = node.getText ? node.getText() : "";
+        return `${" ".repeat(indent)}${syntaxKind}: ${text}\n` +
+          node
+            .getChildren()
+            .map(child => printAST(child, indent + 2))
+            .join("");
+      }
+
+      // Display the serialized AST
+      astOutput.textContent = printAST(sourceFile);
+    }
+
+    // Attach the function to the button
+    generateAstButton.addEventListener("click", generateAST);
+  </script>
+</body>
+</html>
