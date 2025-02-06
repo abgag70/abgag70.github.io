@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Empty Pyodide Notebook</title>
+
+  <!-- Load Starboard Notebook’s JS & CSS from a CDN -->
+  <script src="https://unpkg.com/@webcontainer/starboard-notebook@0.5.2/dist/starboard-notebook.umd.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@webcontainer/starboard-notebook@0.5.2/dist/starboard-notebook.css" />
+
+  <!-- Minimal styling so the notebook fills the page -->
+  <style>
+    html, body {
+      margin: 0; 
+      padding: 0; 
+      height: 100%; 
+      width: 100%;
+    }
+    starboard-notebook {
+      display: block;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 1em;
+    }
+  </style>
+</head>
+<body>
+  <starboard-notebook>
+  
+<!-- 
+  This is an empty notebook.
+  Add new cells by clicking the plus (“+”) button in the notebook UI. 
+  You can choose “Python” from the cell language dropdown to run Python with Pyodide.
+-->
+
+  </starboard-notebook>
+</body>
+</html>
