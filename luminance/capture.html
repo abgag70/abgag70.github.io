@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HDR Bracketing Capture</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #results img {
+      margin: 5px;
+      max-width: 32%;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>HDR Bracketing Capture</h1>
+  <p>Press the button to capture an HDR bracket (3 exposures).</p>
+  <button id="captureButton">Capture HDR Bracket</button>
+  <!-- Hidden video element to stream camera input -->
+  <video id="video" autoplay playsinline style="display:none;"></video>
+  <div id="results"></div>
+
+  <script>
+    // References to DOM elements
+    const captureButton = document.getElementById('captureButton');
+    const video = document.getElementById('video');
+    const resultsDiv = document.getElementById('results');
+    let imageCapture;
+
+    // Request the video stream from the rear camera
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+      .then(stream => {
+        video.srcObject = stream;
+        const track = stream.getVideoTracks()[0];
+        // Create an ImageCapture instance from the video track
+        imageCapture = new ImageCapture(track);
+      })
+      .catch(error => {
+        console.error('Error accessing camera:', error);
+        alert('Could not access the camera. Please ensure you have a supported device and have granted permission.');
+      });
+
+    // Function to capture a photo with a specific exposure time
+    async function capturePhotoWithExposure(exposureTime) {
+      try {
+        // Attempt to set the exposure (shutter speed) manually.
+        // Note: Many devices may not support manual exposure control.
+        if (imageCapture.setOptions) {
+          await imageCapture.setOptions({ exposureTime: exposureTime });
+        }
+        // Capture the photo
+        const blob = await imageCapture.takePhoto();
+        return blob;
+      } catch (error) {
+        console.error(`Error capturing photo with exposure ${exposureTime}:`, error);
+        return null;
+      }
+    }
+
+    // Button click handler for capturing HDR bracket
+    captureButton.addEventListener('click', async () => {
+      if (!imageCapture) {
+        alert('Camera not ready');
+        return;
+      }
+      // Clear previous results
+      resultsDiv.innerHTML = '';
+
+      // Define an array of exposure times (in seconds) for the bracket.
+      // You can adjust these values based on your camera's capabilities.
+      const exposures = [0.001, 0.008, 0.0667];  // Short, medium, long exposures
+
+      for (let i = 0; i < exposures.length; i++) {
+        const blob = await capturePhotoWithExposure(exposures[i]);
+        if (blob) {
+          const imgURL = URL.createObjectURL(blob);
+          const img = document.createElement('img');
+          img.src = imgURL;
+          img.alt = `Exposure: ${exposures[i]} sec`;
+          resultsDiv.appendChild(img);
+        } else {
+          const errorMsg = document.createElement('p');
+          errorMsg.textContent = `Failed to capture photo for exposure: ${exposures[i]} sec.`;
+          resultsDiv.appendChild(errorMsg);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
