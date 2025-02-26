@@ -7,7 +7,6 @@
     <title>Random Riopelle</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128444;&#65039;</text></svg>">
     <style>
-        /* Remove default margins and paddings */
         html,
         body {
             margin: 0;
@@ -15,7 +14,6 @@
             height: 100%;
         }
 
-        /* Flex container that centers content both vertically and horizontally */
         .image-container {
             display: flex;
             align-items: center;
@@ -23,17 +21,12 @@
             min-height: 100vh;
             box-sizing: border-box;
             padding: 20px;
-            /* ensure there's some spacing around the image */
         }
 
-        /* The image should never exceed the screen size and maintains aspect ratio */
         img {
             max-width: 90vw;
-            /* don't let the image exceed 90% of the viewport width */
             max-height: 90vh;
-            /* don't let the image exceed 90% of the viewport height */
             display: block;
-            /* ensure proper centering */
             object-fit: contain;
         }
     </style>
@@ -46,15 +39,14 @@
     </div>
     
     <script>
-        // Example object containing image URLs
         const DOMAIN_TO_IMAGE = "https://dany-demise.github.io/random-riopelle/assets/"
         const URLS = ['1956_005p.jpg', '1965_047p-a.jpg', '1967_002p-2-750x500.jpg', '1975_041p-a.jpg', '1975_106p-a.jpg', '1977_008ha-750x122.jpg', '1979_02k_est.jpg', '1979_02m_est.jpg', '1979_02p_est.jpg', '1981_18_est_lr.jpg', '1983_03_est.jpg', '1990_228-recto-2-750x387.jpg', '1992_01_est-750x936.jpg', '22serie-30-de-lettrines-enluminees-lalphabet-de-thule-750x1102.jpg', 'a-travers-champs-750x707.jpg', 'au-pays-de-lheliante-750x275.jpg', 'autriche-iii-750x495.jpg', 'avion-a-flotteurs-750x1004.jpg', 'bestiaire-750x1223.jpg', 'dans-le-filet-750x947.jpg', 'dejeuner-sur-lherbe-750x596.jpg', 'envol-750x343.jpg', 'feu-vert-a-new-york-3-750x374.jpg', 'force-des-forets-750x558.jpg', 'grand-aigle-750x579.jpg', 'grand-duc-750x1122.jpg', 'hibou-ii-750x1041.jpg', 'hibou-premier-750x1029.jpg', 'hochelaga-750x614.jpg', 'hommage-a-duchamp-hommage-a-maurice-richard-1-750x1641.jpg', 'hommage-a-duchamp-hommage-a-maurice-richard-750x1658.jpg', 'iceberg-no-1-750x480.jpg', 'jardin-nocturne-750x559.jpg', 'l-etang-750x450.jpg', 'la-roue-cold-dog-indian-summer-750x568.jpg', 'larbre-toto-et-la-dame-de-carreau-750x377.jpg', 'le-chien-750x972.jpg', 'le-cirque-750x581.jpg', 'le-cirque-ca-vole-oui-et-vous--750x510.jpg', 'le-progres-envahi-par-la-foret-750x912.jpg', 'le-roi-de-thule-1-750x975.jpg', 'le-roi-de-thule-750x899.jpg', 'lepervier-harfang-des-neiges-750x594.jpg', 'les-hiboux-750x530.jpg', 'les-oies-750x520.jpg', 'les-rois-de-thule-750x767.jpg', 'les-rois-de-thule-750x975.jpg', 'lesprit-de-la-ficelle-750x338.jpg', 'letang-hommage-a-grey-owl-750x561.jpg', 'loie-helico-750x383.jpg', 'masque-eskimo-750x1017.jpg', 'merry-go-round-750x1146.jpg', 'mi-careme-750x1160.jpg', 'mitchikanabikong-750x374.jpg', 'nature-bien-morte-750x568.jpg', 'oiseau-de-nuit-750x572.jpg', 'original-rouge-750x596.jpg', 'pangnirtung-750x267.jpg', 'paysage-750x994.jpg', 'paysage-saint-fabien-750x594.jpg', 'petit-paysage-de-saint-fabien-750x603.jpg', 'point-de-rencontre-750x571.jpg', 'portrait-de-foret-750x1139.jpg', 'rase-mottes-landing-750x391.jpg', 'rosa_luxemburg_2-min-750x332.jpeg', 'saint-anthon-750x477.jpg', 'sans-titre-1-750x2071.jpg', 'sans-titre-2-750x756.jpg', 'sans-titre-3-750x415.jpg', 'sans-titre-4-750x333.jpg', 'sans-titre-5-750x968.jpg', 'sans-titre-6-750x994.jpg', 'sans-titre-7-750x999.jpg', 'sans-titre-750x609.jpg', 'sans-titre-lile-heureuse-750x561.jpg', 'serge-et-gauguin-jouant-a-la-ficelle-750x624.jpg', 'serie-30-de-lettrines-enluminees-lalphabet-de-thule-750x1066.jpg', 'serie-des-fleurs.jpg', 'souffle-doies-750x736.jpg', 'tout-ce-qui-brille-nest-pas-750x300.jpg', 'un-coin-de-pays-750x741.jpg', 'vetheuil-750x1067.jpg']
 
         function getCurrentDayAsInt() {
             const now = new Date();
             const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0'); // Ensure two digits
-            const day = String(now.getDate()).padStart(2, '0'); // Ensure two digits
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0'); 
             return parseInt(`${year}${month}${day}`, 10);
         }
 
@@ -62,10 +54,8 @@
         for (let i = 0; i < URLS.length; i++) {
             images[i] = DOMAIN_TO_IMAGE + URLS[i];
         }
-        // Example index selecting which image to display
-        const index = getCurrentDayAsInt() % 82;
+        const index = getCurrentDayAsInt() % URLS.length;
 
-        // As soon as the DOM is ready, set the image source
         var imgElement = document.getElementById('myImage');
         imgElement.src = images[index];
 
