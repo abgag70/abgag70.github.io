@@ -59,6 +59,25 @@
         var imgElement = document.getElementById('myImage');
         imgElement.src = images[index];
 
+        (function scheduleRefresh() {
+          const now = new Date();
+          const target = new Date();
+          
+          // Set target time to today at 00:00:01
+          target.setHours(0, 0, 1, 0);
+          
+          // If today's 00:00:01 has passed, schedule for tomorrow
+          if (now > target) {
+            target.setDate(target.getDate() + 1);
+          }
+          
+          const delay = target - now; // delay in milliseconds until next 00:00:01
+          
+          setTimeout(() => {
+            location.reload();
+          }, delay);
+        })();
+
     </script>
 
 </body>
