@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Black & White Three.js World</title>
+   <style>
+     body { margin: 0; overflow: hidden; background: #fff; }
+     #startBtn { position: absolute; top: 50%; left: 50%; 
+                 transform: translate(-50%, -50%); padding: 1em 2em; 
+                 background: #000; color: #fff; cursor: pointer; }
+   </style>
+ </head>
+ <body>
+   <div id="startBtn">Click to Enter World</div>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/examples/js/controls/PointerLockControls.js"></script>
+   <script>
+     // Setup scene, camera, renderer
+     const scene = new THREE.Scene();
+     scene.background = new THREE.Color(0xffffff);
+     const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+     camera.position.set(0, 2, 5);
+     const renderer = new THREE.WebGLRenderer({ antialias: true });
+     renderer.setSize(window.innerWidth, window.innerHeight);
+     renderer.shadowMap.enabled = true;
+     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+     document.body.appendChild(renderer.domElement);
+     
+     // Add light (sun) and ambient
+     const sunLight = new THREE.DirectionalLight(0xffffff, 1);
+     sunLight.position.set(50, 100, 50);
+     sunLight.castShadow = true;
+     sunLight.shadow.mapSize.set(1024, 1024);
+     sunLight.shadow.bias = -0.0001;
+     sunLight.shadow.radius = 4;
+     scene.add(sunLight);
+     scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+     
+     // Ground plane
+     const floorGeom = new THREE.PlaneGeometry(1000, 1000);
+     floorGeom.rotateX(-Math.PI/2);
+     const floor = new THREE.Mesh(floorGeom, new THREE.MeshLambertMaterial({color: 0xffffff}));
+     floor.receiveShadow = true;
+     scene.add(floor);
+     
+     // Utility to create a outlined box at given position
+     function createOutlinedBox(x, y, z, size=5, materialArray=null) {
+       const geom = new THREE.BoxGeometry(size, size, size);
+       // If a material array is provided (for textured faces), use it; otherwise white material
+       const baseMat = materialArray || new THREE.MeshLambertMaterial({ color: 0xffffff });
+       const mesh = new THREE.Mesh(geom, baseMat);
+       mesh.position.set(x, y, z);
+       mesh.castShadow = true;
+       mesh.receiveShadow = true;
+       // Add black outline edges
+       const edges = new THREE.EdgesGeometry(geom);
+       const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x000000 }));
+       line.renderOrder = 1;
+       mesh.add(line);
+       scene.add(mesh);
+       return mesh;
+     }
+     
+     // Create a few scattered boxes
+     createOutlinedBox(0, 2.5, -10);   // a box at (0, 0, -10)
+     createOutlinedBox(-8, 2.5, -5);
+     createOutlinedBox(10, 2.5, -15);
+     
+     // Create a large thin wall with different "paintings" on each side
+     const texLoader = new THREE.TextureLoader();
+     const textures = [
+       texLoader.load('https://via.placeholder.com/512?text=Art1'), // +X
+       texLoader.load('https://via.placeholder.com/512?text=Art2'), // -X
+       texLoader.load('https://via.placeholder.com/512?text=Art3'), // +Y
+       texLoader.load('https://via.placeholder.com/512?text=Art4'), // -Y
+       texLoader.load('https://via.placeholder.com/512?text=Art5'), // +Z
+       texLoader.load('https://via.placeholder.com/512?text=Art6')  // -Z
+     ];
+     const faceMats = textures.map(tex => new THREE.MeshBasicMaterial({ map: tex }));
+     const artWall = createOutlinedBox(5, 2, 0, 4, faceMats); // thin wall 4x4x4 (size=4)
+     artWall.scale.z = 0.1;  // flatten the box to make it a thin panel
+     artWall.position.set(5, 2, 0);
+     
+     // PointerLockControls for first-person movement
+     const controls = new THREE.PointerLockControls(camera, document.body);
+     scene.add(controls.getObject());
+     const startBtn = document.getElementById('startBtn');
+     startBtn.addEventListener('click', () => {
+       controls.lock(); // lock pointer (enter FPS mode)
+     });
+     controls.addEventListener('lock', () => { startBtn.style.display = 'none'; });
+     controls.addEventListener('unlock', () => { startBtn.style.display = 'block'; });
+     // Movement flags
+     const keys = { forward:false, back:false, left:false, right:false };
+     document.addEventListener('keydown', (e) => {
+       if (e.code === 'KeyW') keys.forward = true;
+       if (e.code === 'KeyS') keys.back = true;
+       if (e.code === 'KeyA') keys.left = true;
+       if (e.code === 'KeyD') keys.right = true;
+     });
+     document.addEventListener('keyup', (e) => {
+       if (e.code === 'KeyW') keys.forward = false;
+       if (e.code === 'KeyS') keys.back = false;
+       if (e.code === 'KeyA') keys.left = false;
+       if (e.code === 'KeyD') keys.right = false;
+     });
+     
+     // Animation loop
+     renderer.setAnimationLoop(function() {
+       // Simple linear movement
+       const moveSpeed = 0.1;  // adjust for desired speed
+       if (keys.forward) controls.moveForward(moveSpeed);
+       if (keys.back) controls.moveForward(-moveSpeed);
+       if (keys.left) controls.moveRight(-moveSpeed);
+       if (keys.right) controls.moveRight(moveSpeed);
+       renderer.render(scene, camera);
+     });
+     
+     window.addEventListener('resize', () => {
+       camera.aspect = window.innerWidth/window.innerHeight;
+       camera.updateProjectionMatrix();
+       renderer.setSize(window.innerWidth, window.innerHeight);
+     });
+   </script>
+ </body>
+ </html>
