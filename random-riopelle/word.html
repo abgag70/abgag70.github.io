@@ -70,12 +70,12 @@
      // Create a large thin wall with different "paintings" on each side
      const texLoader = new THREE.TextureLoader();
      const textures = [
-       texLoader.load('https://via.placeholder.com/512?text=Art1'), // +X
-       texLoader.load('https://via.placeholder.com/512?text=Art2'), // -X
-       texLoader.load('https://via.placeholder.com/512?text=Art3'), // +Y
-       texLoader.load('https://via.placeholder.com/512?text=Art4'), // -Y
-       texLoader.load('https://via.placeholder.com/512?text=Art5'), // +Z
-       texLoader.load('https://via.placeholder.com/512?text=Art6')  // -Z
+       texLoader.load('https://dany-demise.github.io/random-riopelle/assets/1967_002p-2-750x500.jpg'), // +X
+       texLoader.load('https://dany-demise.github.io/random-riopelle/assets/1967_002p-2-750x500.jpg'), // -X
+       texLoader.load('https://dany-demise.github.io/random-riopelle/assets/1967_002p-2-750x500.jpg'), // +Y
+       texLoader.load('https://dany-demise.github.io/random-riopelle/assets/1967_002p-2-750x500.jpg'), // -Y
+       texLoader.load('https://dany-demise.github.io/random-riopelle/assets/1967_002p-2-750x500.jpg'), // +Z
+       texLoader.load('https://dany-demise.github.io/random-riopelle/assets/1967_002p-2-750x500.jpg')  // -Z
      ];
      const faceMats = textures.map(tex => new THREE.MeshBasicMaterial({ map: tex }));
      const artWall = createOutlinedBox(5, 2, 0, 4, faceMats); // thin wall 4x4x4 (size=4)
