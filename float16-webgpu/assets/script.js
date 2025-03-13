@@ -64,13 +64,6 @@ class MatrixMultiplier {
     }
 
     async matMul(A, B) {
-        // if (!(A instanceof Float32Array && B instanceof Float32Array)) {
-        //     throw new Error("Both A and B must be Float32Array.");
-        // }
-        // if (A.length !== 16 || B.length !== 16) {
-        //     throw new Error("Both matrices must be 4x4 (length 16).");
-        // }
-
         const bufferSize = A.byteLength; // should be 16 floats * 4 bytes each
 
         // Create GPU buffers for matrixA and matrixB (read-only)
@@ -161,7 +154,7 @@ async function matMul(A, B) {
     const matrixB32 = new Float32Array([
            16, 15, 14, 13,
            12, 11, 10,  9,
-            8,  7,  6,  5,
+            8,  7,  6,  5.025,
             4,  3,  2,  1
         ]);
 
