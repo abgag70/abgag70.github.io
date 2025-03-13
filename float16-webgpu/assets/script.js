@@ -1,3 +1,5 @@
+import { Float16Array } from './float16-array.js'
+
 // WebGPULayer encapsulates all WebGPU initialization and compute pipeline setup.
 class WebGPULayer {
     constructor() {
@@ -14,7 +16,7 @@ class WebGPULayer {
         if (!adapter) {
             throw new Error("Failed to get GPU adapter.");
         }
-        this.device = await adapter..requestDevice({
+        this.device = await adapter.requestDevice({
             "requiredFeatures": ['shader-f16'],
           });
 
@@ -22,16 +24,17 @@ class WebGPULayer {
         // The shader reads from matrixA and matrixB, computes the product,
         // and writes the result into matrixC.
         const shaderCode = `
-        @group(0) @binding(0) var<storage, read> matrixA : array<f32>;
-        @group(0) @binding(1) var<storage, read> matrixB : array<f32>;
-        @group(0) @binding(2) var<storage, read_write> matrixC : array<f32>;
+        enable f16;
+        @group(0) @binding(0) var<storage, read> matrixA : array<f16>;
+        @group(0) @binding(1) var<storage, read> matrixB : array<f16>;
+        @group(0) @binding(2) var<storage, read_write> matrixC : array<f16>;
   
         @compute @workgroup_size(4, 4, 1)
         fn main(@builtin(global_invocation_id) gid : vec3<u32>) {
             let row : u32 = gid.y;
             let col : u32 = gid.x;
             let index : u32 = row * 4u + col;
-            var sum : f32 = 0.0;
+            var sum : f16 = 0.0;
             for (var k : u32 = 0u; k < 4u; k = k + 1u) {
                 sum = sum + matrixA[row * 4u + k] * matrixB[k * 4u + col];
             }
@@ -75,7 +78,8 @@ class MatrixMultiplier {
             size: bufferSize,
             usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST
         });
-        this.device.queue.writeBuffer(matrixABuffer, 0, A.buffer, A.byteOffset, A.byteLength);
+        console.log(A.buffer,)
+        this.device.queue.writeBuffer(matrixABuffer, 0, A.buffer, A.byteOffset, A.byteLength * 2);
 
         const matrixBBuffer = this.device.createBuffer({
             size: bufferSize,
@@ -123,7 +127,7 @@ class MatrixMultiplier {
         // Wait for the GPU to finish and map the readback buffer for reading.
         await readbackBuffer.mapAsync(GPUMapMode.READ);
         const arrayBuffer = readbackBuffer.getMappedRange();
-        const result = new Float32Array(arrayBuffer.slice(0));
+        const result = new Uint16Array(arrayBuffer.slice(0));
         readbackBuffer.unmap();
         return result;
     }
@@ -147,27 +151,33 @@ async function matMul(A, B) {
 // Example usage:
 (async () => {
     // Define two 4x4 matrices.
-    const matrixA = () => {
-        return new Float32Array([
+    const matrixA32 = new Float32Array([
             1,  2,  3,  4,
             5,  6,  7,  8,
             9, 10, 11, 12,
            13, 14, 15, 16
         ]);
-    }
-    const matrixB = () => {
-        return new Float32Array([
+    
+    const matrixB32 = new Float32Array([
            16, 15, 14, 13,
            12, 11, 10,  9,
             8,  7,  6,  5,
             4,  3,  2,  1
         ]);
+
+    let matrixA = new Float16Array(16);
+    let matrixB = new Float16Array(16);
+
+    for (let i = 0; i < 16; i++) {
+        matrixA[i] = matrixA32[i];
+        matrixB[i] = matrixB32[i];
     }
 
     try {
 
         for (let i = 0; i < 5; i++) {
-            const result = await matMul(matrixA(), matrixB());
+            console.group(matrixA);
+            const result = await matMul(matrixA, matrixB);
             console.log("Result matrix:", result);
         }
         // Expected output for one multiplication should be the product of the two 4x4 matrices.
