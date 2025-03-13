@@ -1,4 +1,4 @@
-import { Float16Array } from './float16-array.js'
+import { Float16Array, float16ToFloat32 } from './float16-array.js'
 
 // WebGPULayer encapsulates all WebGPU initialization and compute pipeline setup.
 class WebGPULayer {
@@ -79,7 +79,7 @@ class MatrixMultiplier {
             usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST
         });
         console.log(A.buffer,)
-        this.device.queue.writeBuffer(matrixABuffer, 0, A.buffer, A.byteOffset, A.byteLength * 2);
+        this.device.queue.writeBuffer(matrixABuffer, 0, A.buffer, A.byteOffset, A.byteLength);
 
         const matrixBBuffer = this.device.createBuffer({
             size: bufferSize,
@@ -176,9 +176,10 @@ async function matMul(A, B) {
     try {
 
         for (let i = 0; i < 5; i++) {
-            console.group(matrixA);
             const result = await matMul(matrixA, matrixB);
-            console.log("Result matrix:", result);
+            for (let i = 0; i < 16; i++) {
+                console.log(float16ToFloat32(result[i]));
+            }
         }
         // Expected output for one multiplication should be the product of the two 4x4 matrices.
     } catch (error) {
