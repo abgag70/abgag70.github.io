@@ -171,7 +171,7 @@ async function matMul(A, B) {
         for (let i = 0; i < 5; i++) {
             const result = await matMul(matrixA, matrixB);
             for (let i = 0; i < 16; i++) {
-                console.log(float16ToFloat32(result[i]));
+                document.getElementById("results").innerHtml += float16ToFloat32(result[i]).toString() + '\n';
             }
         }
         // Expected output for one multiplication should be the product of the two 4x4 matrices.
