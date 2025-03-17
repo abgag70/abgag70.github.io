@@ -1,4 +1,4 @@
-import { Float16Array, float16ToFloat32 } from './float16-array.js'
+import { Float16Array, castFloat16ToFloat32 } from './float16-array.js'
 
 // WebGPULayer encapsulates all WebGPU initialization and compute pipeline setup.
 class WebGPULayer {
@@ -145,18 +145,18 @@ async function matMul(A, B) {
 (async () => {
     // Define two 4x4 matrices.
     const matrixA32 = new Float32Array([
-            1,  2,  3,  4,
-            5,  6,  7,  8,
-            9, 10, 11, 12,
-           13, 14, 15, 16
-        ]);
+        0.23, 0.78, 0.55, 0.12,
+        0.97, 0.34, 0.66, 0.21,
+        0.45, 0.82, 0.33, 0.59,
+        0.41, 0.68, 0.25, 0.90
+    ]);
     
     const matrixB32 = new Float32Array([
-           16, 15, 14, 13,
-           12, 11, 10,  9,
-            8,  7,  6,  5.025,
-            4,  3,  2,  1
-        ]);
+        0.0085, 0.32, 0.19, 0.72,
+        0.56, 0.77, 1000.44, 0.98,
+        0.67, 0.53, 0.5751618518945685, 0.13,
+        0.89, 0.47, 0.38, 0.60
+    ]);
 
     let matrixA = new Float16Array(16);
     let matrixB = new Float16Array(16);
@@ -171,8 +171,9 @@ async function matMul(A, B) {
         for (let i = 0; i < 5; i++) {
             const result = await matMul(matrixA, matrixB);
             for (let i = 0; i < 16; i++) {
-                document.getElementById("results").innerHTML += float16ToFloat32(result[i]).toString() + "\n";
+                console.log(castFloat16ToFloat32(result[i]));
             }
+            console.log('\n');
         }
         // Expected output for one multiplication should be the product of the two 4x4 matrices.
     } catch (error) {
