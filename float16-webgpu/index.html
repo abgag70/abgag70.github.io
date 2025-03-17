@@ -1,13 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>WebGPU Matrix Multiply Shader Test</title>
+    <meta charset="UTF-8">
+    <title>WebGPU Matrix Multiply Shader Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <style>
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(4, 80px);
+            gap: 5px;
+            justify-content: center;
+            margin: 10px auto;
+        }
+
+        .matrix input {
+            text-align: center;
+            padding: .375rem .75rem;
+            width: 80px;
+            height: 40px;
+        }
+
+        .matrixC {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 5px;
+            justify-content: center;
+            margin: 10px auto;
+        }
+
+        .matrixC input {
+            text-align: center;
+            padding: .375rem .75rem;
+            width: 100px;
+            height: 40px;
+        }
+
+        /* Remove spin buttons in WebKit browsers (Chrome, Safari, etc.) */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Remove spin buttons in Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>WebGPU Matrix Multiply Shader Test</h1>
-  <p id="results">Results :
-  </p>
-  <script src="assets/script.js" type="module"></script>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-10">
+                <h3 class="text-start pb-3">Float 16 matrix multiplication on WebGPU (you must have WebGPU enabled)</h3>
+            </div>
+        </div>
+        <form method="post" action="">
+            <div class="row justify-content-center">
+                <!-- Matrix A -->
+                <div class="col-3">
+                    <h6 class="text-center">Matrix A</h6>
+                    <div class="matrix" id="matrixA">
+                        <!-- Generate 16 input boxes fo"r Matrix A -->
+                        <input type="number" step="0.01" name="A00" required>
+                        <input type="number" step="0.01" name="A01" required>
+                        <input type="number" step="0.01" name="A02" required>
+                        <input type="number" step="0.01" name="A03" required>
+                        <input type="number" step="0.01" name="A10" required>
+                        <input type="number" step="0.01" name="A11" required>
+                        <input type="number" step="0.01" name="A12" required>
+                        <input type="number" step="0.01" name="A13" required>
+                        <input type="number" step="0.01" name="A20" required>
+                        <input type="number" step="0.01" name="A21" required>
+                        <input type="number" step="0.01" name="A22" required>
+                        <input type="number" step="0.01" name="A23" required>
+                        <input type="number" step="0.01" name="A30" required>
+                        <input type="number" step="0.01" name="A31" required>
+                        <input type="number" step="0.01" name="A32" required>
+                        <input type="number" step="0.01" name="A33" required>
+                    </div>
+                </div>
+
+                <!-- Multiplication Symbol -->
+                <div class="col-1 d-flex align-items-center justify-content-center">
+                    <h1>&times;</h1>
+                </div>
+
+                <!-- Matrix B -->
+                <div class="col-3">
+                    <h6 class="text-center">Matrix B</h6>
+                    <div class="matrix" id="matrixB">
+                        <!-- Generate 16 input boxes fo"r Matrix B -->
+                        <input type="number" step="0.01" name="B00" required>
+                        <input type="number" step="0.01" name="B01" required>
+                        <input type="number" step="0.01" name="B02" required>
+                        <input type="number" step="0.01" name="B03" required>
+                        <input type="number" step="0.01" name="B10" required>
+                        <input type="number" step="0.01" name="B11" required>
+                        <input type="number" step="0.01" name="B12" required>
+                        <input type="number" step="0.01" name="B13" required>
+                        <input type="number" step="0.01" name="B20" required>
+                        <input type="number" step="0.01" name="B21" required>
+                        <input type="number" step="0.01" name="B22" required>
+                        <input type="number" step="0.01" name="B23" required>
+                        <input type="number" step="0.01" name="B30" required>
+                        <input type="number" step="0.01" name="B31" required>
+                        <input type="number" step="0.01" name="B32" required>
+                        <input type="number" step="0.01" name=" B33" required>
+                    </div>
+                </div>
+                <!-- Multiplication Symbol -->
+                <div class="col-1 d-flex align-items-center justify-content-center mx-0">
+                    <h1>&equals;</h1>
+                </div>
+
+                <!-- Matrix c -->
+                <div class="col-4">
+                    <h6 class="text-center">Matrix C (half-precision)</h6>
+                    <div class="matrixC" id="matrixC">
+                        <!-- Generate 16 input boxes fo"r Matrix B -->
+                        <input type="number" step="0.01" name="C00" disabled>
+                        <input type="number" step="0.01" name="C01" disabled>
+                        <input type="number" step="0.01" name="C02" disabled>
+                        <input type="number" step="0.01" name="C03" disabled>
+                        <input type="number" step="0.01" name="C10" disabled>
+                        <input type="number" step="0.01" name="C11" disabled>
+                        <input type="number" step="0.01" name="C12" disabled>
+                        <input type="number" step="0.01" name="C13" disabled>
+                        <input type="number" step="0.01" name="C20" disabled>
+                        <input type="number" step="0.01" name="C21" disabled>
+                        <input type="number" step="0.01" name="C22" disabled>
+                        <input type="number" step="0.01" name="C23" disabled>
+                        <input type="number" step="0.01" name="C30" disabled>
+                        <input type="number" step="0.01" name="C31" disabled>
+                        <input type="number" step="0.01" name="C32" disabled>
+                        <input type="number" step="0.01n ame=" C33" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculate Button -->
+            <br>
+            <br>
+            <br>
+        </form>
+    </div>
+    <script src="./assets/wgpufloat16matmul.js" type="module"></script>
 </body>
+
 </html>
