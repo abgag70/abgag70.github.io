@@ -1,54 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TypeScript AST Viewer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TypeScript AST Viewer (plain JS)</title>
 </head>
 <body>
-  <h1>TypeScript AST Viewer</h1>
-  <textarea id="code" rows="10" cols="80">// Write TypeScript code here</textarea>
+  <h1>TypeScript AST Viewer (plain JS)</h1>
+  <textarea id="code" rows="10" cols="80">// Write TypeScript code here
+const x: number = "not a number";</textarea>
   <button id="generateAst">Generate AST</button>
-  <pre id="astOutput" style="background: #f4f4f4; padding: 10px; border: 1px solid #ddd;"></pre>
+  <pre id="astOutput"
+       style="background:#f4f4f4;padding:10px;border:1px solid #ddd;"></pre>
 
-  <script type="module">
-    // Import TypeScript (ESM-compatible) from esm.sh
-    import * as ts from "https://esm.sh/typescript@5.2.2";
-
-    const codeInput = document.getElementById("code");
-    const astOutput = document.getElementById("astOutput");
-    const generateAstButton = document.getElementById("generateAst");
-
-    function generateAST() {
-      const sourceCode = codeInput.value;
-
-      const sourceFile = ts.createSourceFile(
-        "example.ts",
-        sourceCode,
-        ts.ScriptTarget.Latest, // This now works as expected
-        true
-      );
-
-      function printAST(node, indent = "", isLast = true) {
-        const kind = ts.SyntaxKind[node.kind];
-        const text = node.getText ? node.getText().replace(/\s+/g, " ").trim() : "";
-
-        const branch = indent
-          + (isLast ? "└─ " : "├─ ")
-          + `${kind}${text ? ": " + text : ""}\n`;
-
-        const children = node.getChildren();
-        const newIndent = indent + (isLast ? "   " : "│  ");
-
-        return branch + children
-          .map((child, i) => printAST(child, newIndent, i === children.length - 1))
-          .join("");
-      }
-
-      astOutput.textContent = printAST(sourceFile);
-    }
-
-    generateAstButton.addEventListener("click", generateAST);
-  </script>
+  <!-- our “plain .js” script: -->
+  <script type="module" src="ast-viewer.js"></script>
 </body>
 </html>
